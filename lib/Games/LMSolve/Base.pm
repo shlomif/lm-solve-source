@@ -509,29 +509,29 @@ sub display_solution
         }
         @moves = reverse(@moves);
         @states = reverse(@states);
+        my $num_state;
         if ($to_rle)
         {
             my @moves_rle = &run_length_encoding(@moves);
-            my ($m, $sum);
+            my ($m);
 
-            $sum = 0;
+            $num_state = 0;
             foreach $m (@moves_rle)
-            {            
-                print $echo_state->($states[$sum]) . $self->render_move($m->[0]) . " * " . $m->[1] . "\n";
-                $sum += $m->[1];
+            {
+                print $echo_state->($states[$num_state]) . $self->render_move($m->[0]) . " * " . $m->[1] . "\n";
+                $num_state += $m->[1];
             }
         }
         else
         {
-            my ($a);
-            for($a=0;$a<scalar(@moves);$a++)
+            for($num_state=0;$num_state<scalar(@moves);$num_state++)
             {
-                print $echo_state->($states[$a]) . $self->render_move($moves[$a]) . "\n";
+                print $echo_state->($states[$num_state]) . $self->render_move($moves[$num_state]) . "\n";
             }            
         }
         if ($output_states)
         {
-            print $self->display_state($states[$a]), "\n";
+            print $self->display_state($states[$num_state]), "\n";
         }
     }
 }
