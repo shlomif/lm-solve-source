@@ -4,11 +4,13 @@ MANIFEST
 Makefile.PL
 lm-solve.spec
 lm-solve.spec.in
+lib/Games/LMSolve.pm
 lib/Games/LMSolve/Alice.pm
 lib/Games/LMSolve/Base.pm
 lib/Games/LMSolve/Input.pm
 lib/Games/LMSolve/Minotaur.pm
 lib/Games/LMSolve/Numbers.pm
+lib/Games/LMSolve/Registry.pm
 lib/Games/LMSolve/Tilt/Base.pm
 lib/Games/LMSolve/Tilt/Multi.pm
 lib/Games/LMSolve/Tilt/RedBlue.pm
