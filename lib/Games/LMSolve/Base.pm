@@ -114,9 +114,11 @@ the puzzle and its initial state. It should place the board in the object's
 keys, and return the initial state. (in unpacked format).
 
 Note that $file_spec can be either a filename (if it's a string) or a reference
-to a filehandle, or a refernce to the text of the board. input_board() should
+to a filehandle, or a reference to the text of the board. input_board() should
 handle all cases.
 
+You can look at the Games::LMSolve::Input module for methods that facilitate
+inputting a board.
 =cut
 
 sub input_board
@@ -612,6 +614,10 @@ sub set_run_time_states_display
 
     return 0;
 }
+
+=head1 SEE ALSO
+
+L<Games::LMSolve::Input>
 
 =head1 AUTHORS
 
