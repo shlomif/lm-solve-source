@@ -33,7 +33,7 @@ sub _initialize
 {
     my $self = shift;
 
-    %args = @_;
+    my %args = @_;
     
     $self->{'games_solvers'} = {};
 
