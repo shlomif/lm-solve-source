@@ -107,7 +107,7 @@ sub die_on_abstract_function
         "called, while it needs to be overrided by the derived class.\n");
 }
 
-=head2 input_board($self, $file_spec);
+=head2 input_board($self, $file_spec)
 
 This method is responsible to read the "board" (the permanent parameters) of 
 the puzzle and its initial state. It should place the board in the object's
@@ -119,6 +119,7 @@ handle all cases.
 
 You can look at the Games::LMSolve::Input module for methods that facilitate
 inputting a board.
+
 =cut
 
 sub input_board
