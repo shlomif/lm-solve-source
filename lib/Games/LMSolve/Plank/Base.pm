@@ -289,7 +289,9 @@ sub unpack_state
 sub display_state
 {
     my $self = shift;
-    my $state = shift;
+    my $packed_state = shift;
+
+    my $state = $self->unpack_state($packed_state);
 
     my $plank_data = $self->process_plank_data($state);
 
