@@ -61,7 +61,15 @@ Games::LMSolve::Base - base class for puzzle solvers.
     my $self = MyPuzzle::Solver->new();
 
     $self->solve_file($filename);
+
+=head1 DESCRIPTION
     
+    This class implements a generic solver for single player games. In order
+    to use it, one must inherit from it and implement some abstract methods.
+    Afterwards, its interface functions can be invoked to actually solve
+    the game.
+
+=head1 Methods to Override
 =cut
     
 
@@ -98,10 +106,26 @@ sub die_on_abstract_function
         "called, while it needs to be overrided by the derived class.\n");
 }
 
+=head2 input_board($self, $file_spec);
+
+This method is responsible to read the "board" (the permanent parameters) of 
+the puzzle and its initial state. It should place the board in the object's
+keys, and return the initial state. (in unpacked format).
+
+=cut
+
 sub input_board
 {
     return &die_on_abstract_function();
 }
+
+=head2 pack_state($self, $state_vector)
+
+This function accepts a state in unpacked form and should return it in packed
+format. A state in unpacked form can be any perl scalar (as complex as you 
+like). A state in packed form must be a string.
+
+=cut
 
 # A function that accepts the expanded state (as an array ref)
 # and returns an atom that represents it.
@@ -109,6 +133,13 @@ sub pack_state
 {
     return &die_on_abstract_function();
 }
+
+=head2 unpack_state($self, $packed_state)
+
+This function accepts a state in a packed form and should return it in its
+expanded form.
+
+=cut
 
 # A function that accepts an atom that represents a state 
 # and returns an array ref that represents it.
