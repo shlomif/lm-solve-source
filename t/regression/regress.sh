@@ -4,7 +4,7 @@ run_lm_solve()
 {
     local method="$1"
     local path="$dir/$T"
-    (cd ../../ && perl -I. ./lm-solve -g $maze_type --rtd --method $method --output-states t/regression/layouts/$path) | md5sum > checksums/$path.$method.md5.new
+    (cd ../../ && perl -I./lib ./lm-solve -g $maze_type --rtd --method $method --output-states t/regression/layouts/$path) | md5sum > checksums/$path.$method.md5.new
     if ! cmp checksums/$path.brfs.md5.new checksums/$path.brfs.md5 ; then
         echo "$method solutions are not equal for $path"
     fi
