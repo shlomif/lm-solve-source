@@ -32,6 +32,39 @@ use vars qw(%cell_dirs);
         'W' => [-1,0],
     );
 
+=head1 NAME
+
+Games::LMSolve::Base - base class for puzzle solvers.
+
+=head1 SYNOPSIS
+
+    package MyPuzzle::Solver;
+    
+    @ISA = qw(Games::LMSolve::Base);
+
+    # Override these methods:
+
+    sub input_board { ... }
+    sub pack_state { ... }
+    sub unpack_state { ... }
+    sub display_state { ... }
+    sub check_if_final_state { ... }
+    sub enumerate_moves { ... }
+    sub perform_move { ... }
+
+    # Optionally: 
+    sub render_move { ... }
+    sub check_if_unsolvable { ... }
+
+    package main;
+
+    my $self = MyPuzzle::Solver->new();
+
+    $self->solve_file($filename);
+    
+=cut
+    
+
 sub new
 {
     my $class = shift;
@@ -95,7 +128,7 @@ sub display_state
 # dead-end one.
 sub check_if_unsolvable
 {
-    return &die_on_abstract_function();
+    return 0;
 }
 
 sub check_if_final_state
