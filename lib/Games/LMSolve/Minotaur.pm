@@ -170,7 +170,6 @@ sub enumerate_moves
     push @moves, "w";
 
     return @moves;
-    
 }
 
 my %translate_moves = 

@@ -64,12 +64,13 @@ Games::LMSolve::Base - base class for puzzle solvers.
 
 =head1 DESCRIPTION
     
-    This class implements a generic solver for single player games. In order
-    to use it, one must inherit from it and implement some abstract methods.
-    Afterwards, its interface functions can be invoked to actually solve
-    the game.
+This class implements a generic solver for single player games. In order
+to use it, one must inherit from it and implement some abstract methods.
+Afterwards, its interface functions can be invoked to actually solve
+the game.
 
 =head1 Methods to Override
+
 =cut
     
 
@@ -148,6 +149,13 @@ sub unpack_state
     return &die_on_abstract_function();
 }
 
+=head2 display_state($self, $packed_state)
+
+Accepts a packed state and should return the user-readable string 
+representation of the state.
+
+=cut
+
 # Accept an atom that represents a state and output a 
 # user-readable string that describes it.
 sub display_state
@@ -155,17 +163,24 @@ sub display_state
     return &die_on_abstract_function();
 }
 
-# This function checks if a state it receives as an argument is a
-# dead-end one.
-sub check_if_unsolvable
-{
-    return 0;
-}
+=head2 check_if_final_state($self, $state_vector)
+
+This function should return 1 if the expanded state $state_vector is 
+a final state, and the game is over.
+
+=cut
 
 sub check_if_final_state
 {
     return &die_on_abstract_function();
 }
+
+=head2 enumerate_moves($self, $state_vector)
+
+This function accepts an expanded state and should return an array of moves
+that can be performed on this state.
+
+=cut
 
 # This function enumerates the moves accessible to the state.
 # If it returns a move, it still does not mean that this move is a valid 
@@ -174,6 +189,45 @@ sub enumerate_moves
 {
     return &die_on_abstract_function();
 }
+
+=head2 perform_move($self, $state_vector, $move)
+
+This method accepts an expanded state and a move. It should try to peform
+the move on the state. If it is successful, it should return the new
+state. Else, it should return undef, to indicate that the move cannot
+be performed.
+
+=cut
+
+# This function accepts a state and a move. It tries to perform the
+# move on the state. If it is succesful, it returns the new state.
+#
+# Else, it returns undef to indicate that the move is not possible.
+sub perform_move
+{
+    return &die_on_abstract_function();
+}
+
+=head2 check_if_unsolvable($self, $state_vector) (optional over-riding)
+
+This method returns the verdict if C<$state_vector> cannot be solved. This
+method defaults to returning 0, and it is usually safe to keep it that way.
+
+=cut
+
+# This function checks if a state it receives as an argument is a
+# dead-end one.
+sub check_if_unsolvable
+{
+    return 0;
+}
+
+=head2 render_move($self, $move) (optional overriding)
+
+This function returns the user-readable stringified represtantion of a
+move.
+
+=cut
 
 # This is a function that should be overrided in case
 # rendering the move into a string is non-trivial.
@@ -184,15 +238,6 @@ sub render_move
     my $move = shift;
 
     return $move;
-}
-
-# This function accepts a state and a move. It tries to perform the
-# move on the state. If it is succesful, it returns the new state.
-#
-# Else, it returns undef to indicate that the move is not possible.
-sub perform_move
-{
-    return &die_on_abstract_function();
 }
 
 sub set_run_time_states_display
