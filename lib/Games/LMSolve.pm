@@ -16,6 +16,59 @@ use Pod::Usage;
 # [1] - Refer to the book "Design Patterns" by Erich Gamma et. al.
 #
 
+=head1 NAME
+
+Games::LMSolve - base class for LM-Solve solvers factories
+
+=head1 SYNOPSIS
+
+    package MyReg;
+
+    use Games::LMSolve;
+    
+    @ISA = qw(Games::LMSolve);
+
+    use MyPuzzle::Solver;
+
+    sub register_all_solvers
+    {
+        my $self = shift;
+
+        $self->register_solvers({ 'mypuzzle' => "MyPuzzle::Solver"});
+
+        $self->set_default_variant("mypuzzle");
+
+        return 0;
+    }
+
+    package main;
+
+    my $r = MyReg->new();
+    $r->main();
+
+=head1 DESCRIPTION
+
+This class is a registry of L<Games::LMSolve::Base>-derived solvers. It
+maps variants IDs to the classes. To use it, sub-class it and over-ride
+the register_all_solvers() function. In it use register_solvers while
+passing a reference to a hash that contains the variant IDs as keys
+and the class names, or constructor functions as values.
+
+You can also use set_default_variant() to set the default variant.
+
+After all that, in your main script initialize a registry object, and
+call the main() method.
+
+=head1 SEE ALSO
+
+L<Games::LMSolve::Base>
+
+=head1 AUTHORS
+
+Shlomi Fish E<lt>shlomif@vipe.technion.ac.ilE<gt>
+
+=cut
+
 sub new
 {
     my $class = shift;

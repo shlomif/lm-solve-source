@@ -37,6 +37,8 @@ Games::LMSolve::Base - base class for puzzle solvers.
 =head1 SYNOPSIS
 
     package MyPuzzle::Solver;
+
+    use Games::LMSolve::Base;
     
     @ISA = qw(Games::LMSolve::Base);
 
