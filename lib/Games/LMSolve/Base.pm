@@ -60,7 +60,7 @@ Games::LMSolve::Base - base class for puzzle solvers.
 
     my $self = MyPuzzle::Solver->new();
 
-    $self->solve_file($filename);
+    $self->solve_board($filename);
 
 =head1 DESCRIPTION
     
@@ -92,7 +92,7 @@ sub initialize
     my $self = shift;
 
     $self->{'state_collection'} = { };
-    $self->{'cmd_line'} = { };
+    $self->{'cmd_line'} = { 'scan' => "brfs", };
 
     $self->{'num_iters'} = 0;
 
@@ -252,29 +252,32 @@ sub solve_brfs_or_dfs
 {
     my $self = shift;
     my $state_collection = $self->{'state_collection'};
-    my $initial_state = shift;
     my $is_dfs = shift;
     my %args = @_;
     
     my $run_time_display = $self->{'cmd_line'}->{'rt_states_display'};
     my $rtd_callback = $self->{'run_time_display_callback'};
     my $max_iters = $args{'max_iters'} || (-1);
-    my $not_check_iters = ($max_iters < 0);
+    my $check_iters = ($max_iters >= 0);
     
     my (@queue, $state, $coords, $depth, @moves, $new_state);
 
-    push @queue, $initial_state;
+    if (exists($args{'initial_state'}))
+    {
+        push @queue, $initial_state;
+    }
 
-    my $num_iters = $self->{'num_iters'};
     my @ret;
 
-    while (scalar(@queue) && 
-           (
-               $not_check_iters || 
-               ($max_iters > $num_iters)
-           )
-          )
+    @ret = ("unsolved", undef);
+
+    while (scalar(@queue))
     {
+        if ($check_iters && ($max_iters <= $self->{'num_iters'}))
+        {
+            @ret = ("interrupted", undef);
+            goto Return;
+        }
         if ($is_dfs)
         {
             $state = pop(@queue);
@@ -286,7 +289,7 @@ sub solve_brfs_or_dfs
         $coords = $self->unpack_state($state);
         $depth = $state_collection->{$state}->{'d'};
 
-        $num_iters++;
+        $self->{'num_iters'}++;
 
         # Output the current state to the screen, assuming this option
         # is set.
@@ -297,7 +300,6 @@ sub solve_brfs_or_dfs
                 'depth' => $depth,
                 'state' => $coords,
                 'move' => $state_collection->{$state}->{'m'},
-                'num_iters' => $num_iters,
             );
             # print ((" " x $depth) . join(",", @$coords) . " M=" . $self->render_move($state_collection->{$state}->{'m'}) ."\n");
         }
@@ -336,13 +338,9 @@ sub solve_brfs_or_dfs
                 push @queue, $new_state;
             }
         }
-    }
-
-    @ret = ("unsolved", undef);
+    }    
     
     Return:
-
-    $self->{'num_iters'} = $num_iters;
 
     return @ret;
 }
@@ -389,7 +387,6 @@ my %scan_functions =
     },
 );
 
-
 sub solve_state
 {
     my $self = shift;
@@ -400,14 +397,22 @@ sub solve_state
     $self->{'state_collection'}->{$state} = {'p' => undef, 'd' => 0};
 
     return 
-        $scan_functions{$self->{'cmd_line'}->{'scan'}}->(
-            $self,
-            $state,
+        $self->run_scan(
+            'initial_state' => $state,
             @_
         );
 }
 
-sub solve_file
+=head2 $self->solve_board($file_spec, %args)
+
+Solves the board specification specified in $file_spec. %args specifies 
+optional arguments. Currently there is one: 'max_iters' that specifies the 
+maximal iterations to run.
+
+Returns whatever run_scan returns.
+
+=cut
+sub solve_board
 {
     my $self = shift;
     
@@ -415,8 +420,57 @@ sub solve_file
 
     my $initial_coords = $self->input_board($filename);
 
-    return $self->solve_state($initial_coords);
+    return $self->solve_state($initial_coords, @_);
 }
+
+=head2 $self->run_scan(%args)
+
+Continues the current scan. %args may contain the 'max_iters' parameter
+to specify a maximal iterations limit.
+
+Returns two values. The first is a progress indicator. "solved" means the 
+puzzle was solved. "unsolved" means that all the states were covered and
+the puzzle was proven to be unsolvable. "interrupted" means that the
+scan was interrupted in the middle, and could be proved to be either 
+solvable or unsolvable.
+
+The second argument is the final state and is valid only if the progress
+value is "solved".
+
+=cut
+
+sub run_scan
+{
+    my $self = shift;
+
+    my %args = @_;
+
+    return 
+        $scan_functions{$self->{'cmd_line'}->{'scan'}}->(
+            $self,
+            %args
+        );
+}
+
+=head2 $self->get_num_iters()
+
+Retrieves the current number of iterations.
+
+=cut
+
+sub get_num_iters
+{
+    my $self = shift;
+
+    return $self->{'num_iters'};
+}
+
+=head2 $self->display_solution($progress_code, $final_state)
+
+If you input this message with the return value of run_scan() you'll get
+a nice output of the moves to stdout.
+
+=cut
 
 sub display_solution
 {
@@ -523,10 +577,23 @@ sub main
 
     my $filename = shift(@ARGV) || "board.txt";
 
-    my @ret = $self->solve_file($filename);
+    my @ret = $self->solve_board($filename);
 
     $self->display_solution(@ret);
 }
+
+=head2 $self->set_run_time_states_display(\&states_display_callback)
+
+Sets the run time states display callback to \&states_display_callback.
+
+This display callback accepts a reference to the solver and also the following
+arguments in key => value pairs:
+
+"state" - the expanded state.
+"depth" - the depth of the state.
+"move" - the move leading to this state from its parent.
+
+=cut
 
 sub set_run_time_states_display
 {
@@ -546,6 +613,11 @@ sub set_run_time_states_display
     return 0;
 }
 
+=head1 AUTHORS
+
+Shlomi Fish, E<lt>shlomif@vipe.technion.ac.ilE<gt>
+
+=cut 
 
 1;
 
