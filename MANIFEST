@@ -22,4 +22,5 @@ prepare_package.sh
 get-version.pl
 scripts/gen_use_test.pl
 t/00use.t
+t/regression/regress.sh
 META.yml                                Module meta-data (added by MakeMaker)
