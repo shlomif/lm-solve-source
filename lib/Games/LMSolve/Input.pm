@@ -407,6 +407,8 @@ sub input_horiz_vert_walls_layout
 
 Written by Shlomi Fish E<lt>shlomif@vipe.technion.ac.ilE<gt>
 
+=cut
+
 1;
 
 
