@@ -28,6 +28,35 @@ use strict;
 
 use English;
 
+=head1 NAME
+
+Games::LMSolve::Input - input class for LM-Solve
+
+=head1 SYNOPSIS
+
+    use Games::LMSolve::Input;
+
+    my $input_obj = Games::LMSolve::Input->new();
+
+    my $file_spec = "board.txt";
+
+    my $spec =
+    {
+        'dims' => { 'type' => "xy(integer)", 'required' => 1, },
+        'planks' => { 'type' => "array(start_end(xy(integer)))", 
+                      'required' => 1,
+                    },
+        'layout' => { 'type' => "layout", 'required' => 1,},        
+    };
+
+    my $input_fields = $input_obj->input_board($filename, $spec);
+
+=head1 DESCRIPTION
+
+This class implements the C<input_board> method, which enables to read boards
+in "key = value" format. Several types of values are supported.
+=cut
+
 sub new
 {
     my $class = shift;
@@ -47,6 +76,53 @@ sub initialize
 
     return 0;
 }
+
+=head1 $self->input_board($file_spec, $spec);
+
+This method accepts two arguments. C<$file_spec> which is the filename, 
+reference to a filehandle, or reference to the text containing the board 
+specification.
+
+$spec is a specification of the board given as a reference to a hash. 
+The keys are the keys inside the file. The values are references
+to hashes containing parameters. The 'required' parameter is given to
+specify that an exception should be thrown if this key was not specified. The
+other parameter (a mandatory one) is type which specified the type of the 
+value. Available types are:
+
+=over 8
+
+=item integer
+
+A simple integer (will be returned as a scalar)
+
+=item xy(integer)
+
+An (X,Y) pair. Will be returned as { 'x' => $x, 'y' => $y }.
+
+=item array(xy(integer))
+
+An array of [(X1,Y1),(X2,Y2),(X3,Y3)...] pairs. Will be returned as a
+reference to an array of (X,Y) pairs.
+
+=item array(start_end(xy(integer)))
+
+An array of [((SX1,SX2)->(EX1,EX2)), ((SX1,SX2)->(EX1,EX2))...] pairs of 
+(X,Y) pairs. Will be returned as a reference to an array of 
+
+    { 
+        'start' => { 'x' => $start_x, 'y' => $start_y },
+        'end' => { 'x' => $end_x, 'y' => $end_y },
+    }
+
+=item layout
+
+This is a generic layout that comes inside a here-document. It is returned
+as an array of lines that later have to be processed by another routine.
+
+=back
+
+=cut
 
 sub input_board
 {
@@ -326,6 +402,10 @@ sub input_horiz_vert_walls_layout
 
     return (\@horiz_walls, \@vert_walls);
 }
+
+=head1 AUTHORS
+
+Written by Shlomi Fish E<lt>shlomif@vipe.technion.ac.ilE<gt>
 
 1;
 

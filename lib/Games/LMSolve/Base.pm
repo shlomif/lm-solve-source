@@ -16,8 +16,6 @@ use vars qw(@ISA @EXPORT_OK);
 
 @EXPORT_OK=qw(%cell_dirs);
 
-no warnings qw(recursion);
-
 use vars qw(%cell_dirs);
 
 %cell_dirs = 
@@ -266,7 +264,7 @@ sub solve_brfs_or_dfs
 
     if (exists($args{'initial_state'}))
     {
-        push @queue, $initial_state;
+        push @queue, $args{'initial_state'};
     }
 
     my @ret;
