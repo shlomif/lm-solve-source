@@ -113,6 +113,10 @@ This method is responsible to read the "board" (the permanent parameters) of
 the puzzle and its initial state. It should place the board in the object's
 keys, and return the initial state. (in unpacked format).
 
+Note that $file_spec can be either a filename (if it's a string) or a reference
+to a filehandle, or a refernce to the text of the board. input_board() should
+handle all cases.
+
 =cut
 
 sub input_board
@@ -240,23 +244,9 @@ sub render_move
     return $move;
 }
 
-sub set_run_time_states_display
-{
-    my $self = shift;
-    my $states_display = shift;
+=head1 API
 
-    if (! $states_display)
-    {
-        $self->{'cmd_line'}->{'rt_states_display'} = undef;
-    }
-    else
-    {
-        $self->{'cmd_line'}->{'rt_states_display'} = 1;
-        $self->{'run_time_display_callback'} = $states_display;
-    }
-
-    return 0;
-}
+=cut
 
 sub solve_brfs_or_dfs
 {
@@ -537,6 +527,25 @@ sub main
 
     $self->display_solution(@ret);
 }
+
+sub set_run_time_states_display
+{
+    my $self = shift;
+    my $states_display = shift;
+
+    if (! $states_display)
+    {
+        $self->{'cmd_line'}->{'rt_states_display'} = undef;
+    }
+    else
+    {
+        $self->{'cmd_line'}->{'rt_states_display'} = 1;
+        $self->{'run_time_display_callback'} = $states_display;
+    }
+
+    return 0;
+}
+
 
 1;
 
