@@ -97,14 +97,6 @@ sub display_state
     return "($x,$y) Goals Collected=[" . join(",", (grep { $reached_goals &= (1 << $_) } (1 .. ($self->{'num_goals'})))) . "]";
 }
 
-sub check_if_unsolvable
-{
-    my $self = shift;
-    my $coords = shift;
-
-    return 0;
-}
-
 sub check_if_final_state
 {
     my $self = shift;

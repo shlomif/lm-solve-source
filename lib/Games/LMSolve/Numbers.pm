@@ -121,14 +121,6 @@ sub display_state
     return sprintf("X = %i ; Y = %i", $x+1, $y+1);
 }
 
-# This function checks if a state it receives as an argument is a
-# dead-end one.
-sub check_if_unsolvable
-{
-    # One can always proceed from here.
-    return 0;
-}
-
 sub check_if_final_state
 {
     my $self = shift;

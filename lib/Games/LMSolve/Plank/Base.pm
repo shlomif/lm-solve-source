@@ -301,11 +301,6 @@ sub display_state
     return join(" ; ", @strings);
 }
 
-sub check_if_unsolvable
-{
-    return 0;
-}
-
 sub check_if_final_state
 {
     my $self = shift;
