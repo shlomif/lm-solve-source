@@ -1,0 +1,25 @@
+COPYING
+INSTALL
+MANIFEST
+Makefile.PL
+lm-solve.spec
+lm-solve.spec.in
+lib/Games/LMSolve/Alice.pm
+lib/Games/LMSolve/Base.pm
+lib/Games/LMSolve/Input.pm
+lib/Games/LMSolve/Minotaur.pm
+lib/Games/LMSolve/Numbers.pm
+lib/Games/LMSolve/Tilt/Base.pm
+lib/Games/LMSolve/Tilt/Multi.pm
+lib/Games/LMSolve/Tilt/RedBlue.pm
+lib/Games/LMSolve/Tilt/Single.pm
+lib/Games/LMSolve/Plank/Base.pm
+lib/Games/LMSolve/Plank/Hex.pm
+lm-solve
+README
+TODO
+prepare_package.sh
+get-version.pl
+scripts/gen_use_test.pl
+t/00use.t
+META.yml                                Module meta-data (added by MakeMaker)
