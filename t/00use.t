@@ -2,7 +2,7 @@
 
 use strict;
 
-use Test::More tests => 10;
+use Test::More tests => 12;
 
 BEGIN 
 {
@@ -16,4 +16,6 @@ use_ok("Games::LMSolve::Tilt::Single");
 use_ok("Games::LMSolve::Tilt::Multi");
 use_ok("Games::LMSolve::Tilt::RedBlue");
 use_ok("Games::LMSolve::Input");
+use_ok("Games::LMSolve::Registry");
+use_ok("Games::LMSolve");
 }

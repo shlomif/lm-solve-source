@@ -10,8 +10,9 @@ my @modules =
             } 
             qw(Numbers Base Plank::Base Plank::Hex Alice),
             qw(Tilt::Base Tilt::Single Tilt::Multi Tilt::RedBlue),
-            qw(Input)
-        )
+            qw(Input Registry)
+        ),
+        "Games::LMSolve"
     );
 
 my $num_modules = scalar(@modules);
