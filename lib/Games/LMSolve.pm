@@ -5,6 +5,17 @@ use strict;
 use Getopt::Long;
 use Pod::Usage;
 
+# You can think of this module as a Factory[1] for the solver classes.
+# It reads the -g/--game/--preset [variant name] command line option
+# and determines which class to instantize based on it.
+#
+# Note that it does not touch the other command line options so the
+# GetOptions() called by the main() function of the class will be
+# able to process them.
+#
+# [1] - Refer to the book "Design Patterns" by Erich Gamma et. al.
+#
+
 sub new
 {
     my $class = shift;

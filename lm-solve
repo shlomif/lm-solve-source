@@ -1,64 +1,12 @@
 #!/usr/bin/perl -w
 
-# You can think of this script as a Factory[1] for the solver classes.
-# It reads the -g/--game/--preset [variant name] command line option
-# and determines which class to instantize based on it.
-#
-# Note that it does not touch the other command line options so the
-# GetOptions() called by the main() function of the class will be
-# able to process them.
-#
-# [1] - Refer to the book "Design Patterns" by Erich Gamma et. al.
-#
-
 use strict;
 
-use Getopt::Long;
-use Pod::Usage;
+use Games::LMSolve::Registry;
 
-use Games::LMSolve::Alice;
-use Games::LMSolve::Minotaur;
-use Games::LMSolve::Numbers;
-use Games::LMSolve::Plank::Base;
-use Games::LMSolve::Tilt::Single;
-use Games::LMSolve::Tilt::Multi;
-use Games::LMSolve::Tilt::RedBlue;
-use Games::LMSolve::Plank::Hex;
+my $r = Games::LMSolve::Registry->new('default_variant' => "minotaur");
 
-my $variant = "minotaur";
-my $help = 0;
-my $man = 0;
-
-Getopt::Long::Configure('pass_through');
-GetOptions(
-    "g|game=s" => \$variant, 
-    'help|h|?' => \$help, 
-    'man' => \$man
-    ) or pod2usage(2);
-
-pod2usage(1) if $help;
-pod2usage(-exitstatus => 0, -verbose => 2) if $man;
-
-my %variants_map = 
-(
-    'alice' => "Games::LMSolve::Alice",
-    'minotaur' => "Games::LMSolve::Minotaur",
-    'numbers' => "Games::LMSolve::Numbers",
-    'plank' => "Games::LMSolve::Plank::Base",
-    'hex_plank' => "Games::LMSolve::Plank::Hex",
-    'tilt_single' => "Games::LMSolve::Tilt::Single",
-    'tilt_multi' => "Games::LMSolve::Tilt::Multi",
-    'tilt_rb' => "Games::LMSolve::Tilt::RedBlue",
-    'tilt_puzzle' => "Games::LMSolve::Tilt::RedBlue",
-);
-
-if (!exists($variants_map{$variant}))
-{
-    die "Unknown game variant \"$variant\"";
-}
-
-my $game = $variants_map{$variant}->new();
-$game->main();
+$r->main();
 
 __END__
 
