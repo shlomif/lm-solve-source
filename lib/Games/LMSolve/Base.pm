@@ -241,7 +241,7 @@ sub render_move
 
     my $move = shift;
 
-    return $move;
+    return defined($move)?$move:"";
 }
 
 =head1 API
@@ -375,15 +375,13 @@ my %scan_functions =
 (
     'dfs' => sub {
         my $self = shift;
-        my $initial_state = shift;
 
-        return $self->solve_brfs_or_dfs($initial_state, 1, @_);
+        return $self->solve_brfs_or_dfs(1, @_);
     },
     'brfs' => sub {
         my $self = shift;
-        my $initial_state = shift;
 
-        return $self->solve_brfs_or_dfs($initial_state, 0, @_);
+        return $self->solve_brfs_or_dfs(0, @_);
     },
 );
 
