@@ -301,7 +301,7 @@ sub display_state
     return join(" ; ", @strings);
 }
 
-sub check_if_unsolveable
+sub check_if_unsolvable
 {
     return 0;
 }

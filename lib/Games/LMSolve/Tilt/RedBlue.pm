@@ -93,7 +93,7 @@ sub display_state
     return ("Red=($rx,$ry) ; Blue=($bx,$by)");
 }
 
-sub check_if_unsolveable
+sub check_if_unsolvable
 {
     my $self = shift;
     my $coords = shift;

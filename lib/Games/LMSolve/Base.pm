@@ -93,7 +93,7 @@ sub display_state
 
 # This function checks if a state it receives as an argument is a
 # dead-end one.
-sub check_if_unsolveable
+sub check_if_unsolvable
 {
     return &die_on_abstract_function();
 }
@@ -203,7 +203,7 @@ sub solve_brfs_or_dfs
             # print ((" " x $depth) . join(",", @$coords) . " M=" . $self->render_move($state_collection->{$state}->{'m'}) ."\n");
         }
         
-        if ($self->check_if_unsolveable($coords))
+        if ($self->check_if_unsolvable($coords))
         {
             next;
         }

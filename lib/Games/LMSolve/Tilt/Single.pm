@@ -77,7 +77,7 @@ sub display_state
     return sprintf("($x,$y)");
 }
 
-sub check_if_unsolveable
+sub check_if_unsolvable
 {
     my $self = shift;
     my $coords = shift;

@@ -123,7 +123,7 @@ sub display_state
 
 # This function checks if a state it receives as an argument is a
 # dead-end one.
-sub check_if_unsolveable
+sub check_if_unsolvable
 {
     # One can always proceed from here.
     return 0;
