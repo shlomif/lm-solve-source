@@ -57,7 +57,7 @@ sub input_board
     return [ $thes_x, $thes_y, $mino_x, $mino_y ];
 }
 
-sub mino_move
+sub _mino_move
 {
     my $self = shift;
     my $horiz_walls = $self->{'horiz_walls'};
@@ -196,10 +196,65 @@ sub perform_move
     my @new_coords = @$coords;
     $new_coords[0] += $offsets->[0];
     $new_coords[1] += $offsets->[1];
-    (@new_coords[2 .. 3]) = $self->mino_move(@new_coords);
+    (@new_coords[2 .. 3]) = $self->_mino_move(@new_coords);
 
     return \@new_coords;
 }
 
 1;
+
+=head1 NAME
+
+Games::LMSolve::Minotaur - driver for solving the "Theseus and the Minotaur"
+mazes.
+
+=head1 SYNOPSIS
+
+NA - should not be used directly.
+
+=head1 METHODS
+
+=head2 $self->input_board()
+
+Overrided.
+
+=head2 $self->pack_state()
+
+Overrided.
+
+=head2 $self->unpack_state()
+
+Overrided.
+
+=head2 $self->display_state()
+
+Overrided.
+
+=head2 $self->check_if_unsolvable()
+
+Overrided.
+
+=head2 $self->check_if_final_state()
+
+Overrided.
+
+=head2 $self->enumerate_moves()
+
+Overrided.
+
+=head2 $self->perform_move()
+
+Overrided.
+
+=head1 SEE ALSO
+
+L<Games::LMSolve::Base>.
+
+L<http://www.logicmazes.com/theseus.html>
+
+=head1 AUTHORS
+
+Shlomi Fish, L<http://www.shlomifish.org/>
+
+=cut
 

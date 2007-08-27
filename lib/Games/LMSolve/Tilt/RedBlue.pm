@@ -137,3 +137,61 @@ sub perform_move
 }
 
 1;
+
+
+=head1 NAME
+
+Games::LMSolve::Tilt::RedBlue - driver for solving the red blue tilt puzzles
+
+=head1 SYNOPSIS
+
+NA - should not be used directly.
+
+=head1 METHODS
+
+=head2 $self->input_board()
+
+Overrided.
+
+=head2 $self->pack_state()
+
+Overrided.
+
+=head2 $self->unpack_state()
+
+Overrided.
+
+=head2 $self->display_state()
+
+Overrided.
+
+=head2 $self->check_if_unsolvable()
+
+Overrided.
+
+=head2 $self->check_if_final_state()
+
+Overrided.
+
+=head2 $self->enumerate_moves()
+
+Overrided.
+
+=head2 $self->perform_move()
+
+Overrided.
+
+=head1 SEE ALSO
+
+L<Games::LMSolve::Base>.
+
+For more about red-blue tilt mazes see:
+
+L<http://www.clickmazes.com/newtilt/ixtilt.htm>
+
+=head1 AUTHORS
+
+Shlomi Fish, L<http://www.shlomifish.org/>
+
+=cut
+

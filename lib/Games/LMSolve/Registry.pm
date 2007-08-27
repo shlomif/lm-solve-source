@@ -2,6 +2,17 @@ package Games::LMSolve::Registry;
 
 use strict;
 
+=head1 NAME
+
+Games::LMSolve::Registry - the registry of all LM-Solve drivers.
+
+=head1 DESCRIPTION
+
+This is a registry of all LM-Solve drivers.
+
+=head1 METHODS 
+=cut
+
 use Games::LMSolve;
 
 use vars qw(@ISA);
@@ -16,6 +27,12 @@ use Games::LMSolve::Tilt::Single;
 use Games::LMSolve::Tilt::Multi;
 use Games::LMSolve::Tilt::RedBlue;
 use Games::LMSolve::Plank::Hex;
+
+=head2 $self->register_all_solvers()
+
+Register all the solvers.
+
+=cut
 
 sub register_all_solvers
 {
@@ -41,4 +58,11 @@ sub register_all_solvers
 
 1;
 
+=head1 SEE ALSO
+
+L<Games::LMSolve>
+
+=head1 AUTHORS
+
+Shlomi Fish, L<http://www.shlomifish.org/>
 

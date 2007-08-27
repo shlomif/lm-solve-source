@@ -59,13 +59,21 @@ You can also use set_default_variant() to set the default variant.
 After all that, in your main script initialize a registry object, and
 call the main() method.
 
-=head1 SEE ALSO
+=head1 METHODS
 
-L<Games::LMSolve::Base>
+=cut
 
-=head1 AUTHORS
+=head2 new
 
-Shlomi Fish E<lt>shlomif@vipe.technion.ac.ilE<gt>
+The constructor. Accepts the following named arguments:
+
+=over 4
+
+=item * 'default_variant'
+
+The default variant for the registry to be used in case one is not specified.
+
+=back
 
 =cut
 
@@ -100,6 +108,12 @@ sub _initialize
     return 0;
 }
 
+=head2 $registry->set_default_variant($variant)
+
+Sets the default variant to $variant.
+
+=cut
+
 sub set_default_variant
 {
     my $self = shift;
@@ -110,6 +124,12 @@ sub set_default_variant
 
     return 0;
 }
+
+=head2 $self->register_solvers(\%solvers)
+
+Adds the %solvers map of names to class names to the registry.
+
+=cut
 
 sub register_solvers
 {
@@ -122,12 +142,26 @@ sub register_solvers
     return 0;
 }
 
+=head2 $self->register_all_solvers()
+
+To be sub-classes to register all the solvers that the registry wants
+to register. Does nothing here.
+
+=cut
+
 sub register_all_solvers
 {
     my $self = shift;
 
     return 0;
 }
+
+=head2 $self->main()
+
+the main function that handles the command line arguments and runs the
+program.
+
+=cut
 
 sub main
 {
@@ -166,4 +200,12 @@ sub main
 }
 1;
 
+=head1 SEE ALSO
 
+L<Games::LMSolve::Base>
+
+=head1 AUTHORS
+
+Shlomi Fish, L<http://www.shlomifish.org/>
+
+=cut

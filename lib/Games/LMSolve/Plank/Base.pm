@@ -188,7 +188,7 @@ sub input_board
     $self->{'plank_lens'} = [ map { $_->{'len'} } @planks ];
     
     my $state = [ 0,  (map { ($_->{'start'}->{'x'}, $_->{'start'}->{'y'}, (($_->{'dir'} eq "E") ? 0 : ($_->{'dir'} eq "SE") ? 2 : 1)) } @planks) ];
-    $self->process_plank_data($state);
+    $self->_process_plank_data($state);
 
     #{
     #    use Data::Dumper;
@@ -200,7 +200,7 @@ sub input_board
     return $state;
 }
 
-sub process_plank_data
+sub _process_plank_data
 {
     my $self = shift;
 
@@ -293,7 +293,7 @@ sub display_state
 
     my $state = $self->unpack_state($packed_state);
 
-    my $plank_data = $self->process_plank_data($state);
+    my $plank_data = $self->_process_plank_data($state);
 
     my @strings;
     foreach my $p (@$plank_data)
@@ -309,7 +309,7 @@ sub check_if_final_state
 
     my $state = shift;
 
-    my $plank_data = $self->process_plank_data($state);
+    my $plank_data = $self->_process_plank_data($state);
 
     my $goal_x = $self->{'goal_x'};
     my $goal_y = $self->{'goal_y'};
@@ -326,7 +326,7 @@ sub enumerate_moves
 
     my $state = shift;
 
-    my $plank_data = $self->process_plank_data($state);
+    my $plank_data = $self->_process_plank_data($state);
 
     # Declare some accessors
     my $board = $self->{'board'};
@@ -434,7 +434,7 @@ sub perform_move
     my $state = shift;
     my $m = shift;
 
-    my $plank_data = $self->process_plank_data($state);
+    my $plank_data = $self->_process_plank_data($state);
 
     my ($x,$y,$p,$dir) = @{$m}{qw(x y p dir)};
     my $dir_idx;
@@ -472,7 +472,7 @@ sub perform_move
     @$new_state[0] = $p;
     @$new_state[(1+$p*3) .. (1+$p*3+2)] = ($x,$y,$dir_idx);
 
-    $self->process_plank_data($new_state);
+    $self->_process_plank_data($new_state);
     
     return $new_state;
 }
@@ -492,3 +492,71 @@ sub render_move
         return "";
     }
 }
+
+1;
+
+
+=head1 NAME
+
+Games::LMSolve::Plank::Base - driver for solving the rectangular Plank puzzles
+
+=head1 SYNOPSIS
+
+NA - should not be used directly.
+
+=head1 METHODS
+
+=head2 $self->initialize()
+
+The constructor.
+
+=head2 $self->input_board()
+
+Overrided.
+
+=head2 $self->pack_state()
+
+Overrided.
+
+=head2 $self->unpack_state()
+
+Overrided.
+
+=head2 $self->display_state()
+
+Overrided.
+
+=head2 $self->check_if_unsolvable()
+
+Overrided.
+
+=head2 $self->check_if_final_state()
+
+Overrided.
+
+=head2 $self->enumerate_moves()
+
+Overrided.
+
+=head2 $self->perform_move()
+
+Overrided.
+
+=head2 $self->render_move()
+
+Overrided.
+
+=head1 SEE ALSO
+
+L<Games::LMSolve::Base>.
+
+For more about Plank puzzles see:
+
+L<http://www.clickmazes.com/planks/ixplanks.htm> .
+
+=head1 AUTHORS
+
+Shlomi Fish, L<http://www.shlomifish.org/>
+
+=cut
+

@@ -2,3 +2,5 @@
     - Added the Changes file.
     - Added the jumping_cards.pl example under examples.
     - Added the MIT X11 license as the LICENSE file.
+    - Added the t/pod.t and t/pod-coverage.t tests and added full
+    POD coverage.

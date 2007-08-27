@@ -56,3 +56,33 @@ sub move_ball_to_end
 }
 
 1;
+
+
+=head1 NAME
+
+Games::LMSolve::Tilt::Base - base class for the tilt mazes' drivers.
+
+=head1 SYNOPSIS
+
+NA - should not be used directly.
+
+=head1 METHODS
+
+=head2 $self->move_ball_to_end()
+
+Moves the ball to the end.
+
+=head1 SEE ALSO
+
+L<Games::LMSolve::Base>.
+
+For more about tilt mazes see:
+
+http://www.clickmazes.com/indext.htm
+
+=head1 AUTHORS
+
+Shlomi Fish, L<http://www.shlomifish.org/>
+
+=cut
+

@@ -55,6 +55,13 @@ Games::LMSolve::Input - input class for LM-Solve
 
 This class implements the C<input_board> method, which enables to read boards
 in "key = value" format. Several types of values are supported.
+
+=head2 METHODS
+
+=head2 $self->new()
+
+Constrcuts a new object. Accepts no meaningful arguments.
+
 =cut
 
 sub new
@@ -65,19 +72,19 @@ sub new
 
     bless $self, $class;
 
-    $self->initialize(@_);
+    $self->_initialize(@_);
 
     return $self;
 }
 
-sub initialize
+sub _initialize
 {
     my $self = shift;
 
     return 0;
 }
 
-=head1 $self->input_board($file_spec, $spec);
+=head2 $self->input_board($file_spec, $spec);
 
 This method accepts two arguments. C<$file_spec> which is the filename, 
 reference to a filehandle, or reference to the text containing the board 
@@ -338,6 +345,12 @@ sub input_board
     return $ret;
 }
 
+=head2 $self->input_horiz_vert_walls_layout($width, $height, \@lines)
+
+Input a horizontal-vertical line layout as exists in a maze.
+
+=cut
+
 sub input_horiz_vert_walls_layout
 {
     my $self = shift;
@@ -398,14 +411,14 @@ sub input_horiz_vert_walls_layout
         $input_horiz_wall->();
         $input_vert_wall->();
     }
-    $input_horiz_wall->();    
+    $input_horiz_wall->();
 
     return (\@horiz_walls, \@vert_walls);
 }
 
 =head1 AUTHORS
 
-Written by Shlomi Fish E<lt>shlomif@vipe.technion.ac.ilE<gt>
+Written by Shlomi Fish ( L<http://www.shlomifish.org/> )
 
 =cut
 
