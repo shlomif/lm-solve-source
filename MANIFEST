@@ -1,7 +1,9 @@
+Build.PL
 Changes
 COPYING
 examples/jumping_cards.pl
 get-version.pl
+inc/Test/Run/Builder.pm
 INSTALL
 lib/Games/LMSolve/Alice.pm
 lib/Games/LMSolve/Base.pm
