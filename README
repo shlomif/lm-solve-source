@@ -8,7 +8,11 @@ you can invoke the program by using the "lm-solve" executable.
 
 The LM-Solve homepage is:
 
-http://vipe.technion.ac.il/~shlomif/lm-solve/
+http://www.shlomifish.org/lm-solve/
+
+Its version control repository is:
+
+http://svn.berlios.de/svnroot/repos/quad-pres/lm-solve/
 
 LM-Solve was written by Shlomi Fish (shlomif@vipe.technion.ac.il).
 

@@ -6,3 +6,9 @@
     POD coverage.
     - Converted to Build.PL in order to have a better META.yml
     and other advantages.
+    - All changes are done to improve:
+        http://cpants.perl.org/dist/Games-LMSolve
+    - Mentioned the subversion repository in the README and the main
+    POD file.
+    - Added the common Module-Starter-like URLs for information under
+    "SUPPORT".
