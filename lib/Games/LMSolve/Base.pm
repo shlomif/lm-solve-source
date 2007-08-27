@@ -6,7 +6,7 @@ use Getopt::Long;
 
 use vars qw($VERSION);
 
-$VERSION = '0.8.2';
+$VERSION = '0.8.3';
 
 use Exporter;
 
