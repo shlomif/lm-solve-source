@@ -1,3 +1,4 @@
+0.8.4    Sun Jun 28 12:26:18 IDT 2009
     - Changed COPYING to read MIT/X11 instead of Public Domain.
     - Changed the license in Build.PL to "mit".
     - Updated Test::Run::Builder to include ACTION_tags.
