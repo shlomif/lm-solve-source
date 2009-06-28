@@ -1,6 +1,8 @@
     - Changed COPYING to read MIT/X11 instead of Public Domain.
     - Changed the license in Build.PL to "mit".
     - Updated Test::Run::Builder to include ACTION_tags.
+    - Added use warnings to all lib/**/*.pm files.
+    - Added some "requires" (built-in, but still.).
 
 0.8.3
     - Added the Changes file.

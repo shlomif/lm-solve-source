@@ -17,7 +17,15 @@ my $build = Test::Run::Builder->new(
     },
     requires => 
     {
+        'English' => 0,
+        'Exporter' => 0,
+        'Getopt::Long' => 0,
+        'Pod::Usage' => 0,
+        'strict' => 0,
+        'vars' => 0,
+        'warnings' => 0,
     },
+    dist_author => 'Shlomi Fish <shlomif@iglu.org.il>',
     dist_version_from => "lib/Games/LMSolve/Base.pm",
     license => "mit",
     create_makefile_pl => 'traditional',
