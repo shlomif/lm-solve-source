@@ -1,6 +1,7 @@
 package Games::LMSolve::Alice;
 
 use strict;
+use warnings;
 
 use Games::LMSolve::Base qw(%cell_dirs);
 

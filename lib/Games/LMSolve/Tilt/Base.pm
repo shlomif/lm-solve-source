@@ -1,6 +1,7 @@
 package Games::LMSolve::Tilt::Base;
 
 use strict;
+use warnings;
 
 use vars qw(@ISA);
 

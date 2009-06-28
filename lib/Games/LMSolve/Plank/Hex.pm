@@ -1,6 +1,7 @@
 package Games::LMSolve::Plank::Hex;
 
 use strict;
+use warnings;
 
 use vars qw(@ISA);
 

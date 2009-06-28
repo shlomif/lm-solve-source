@@ -1,5 +1,8 @@
 package Games::LMSolve::Input::Scalar::FH;
 
+use strict;
+use warnings;
+
 sub TIEHANDLE
 {
     my $class = shift;
@@ -25,6 +28,7 @@ sub EOF
 package Games::LMSolve::Input;
 
 use strict;
+use warnings;
 
 use English;
 

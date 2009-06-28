@@ -1,6 +1,7 @@
 package Games::LMSolve::Minotaur;
 
 use strict;
+use warnings;
 
 use Games::LMSolve::Base;
 

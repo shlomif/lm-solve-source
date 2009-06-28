@@ -1,6 +1,7 @@
 package Games::LMSolve::Base;
 
 use strict;
+use warnings;
 
 use Getopt::Long;
 

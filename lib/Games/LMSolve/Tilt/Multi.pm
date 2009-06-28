@@ -1,6 +1,7 @@
 package Games::LMSolve::Tilt::Multi;
 
 use strict;
+use warnings;
 
 use Games::LMSolve::Tilt::Base;
 
