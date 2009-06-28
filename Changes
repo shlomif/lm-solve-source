@@ -3,6 +3,7 @@
     - Updated Test::Run::Builder to include ACTION_tags.
     - Added use warnings to all lib/**/*.pm files.
     - Added some "requires" (built-in, but still.).
+    - Added resources and keywords to the META.yml / Build.PL .
 
 0.8.3
     - Added the Changes file.

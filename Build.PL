@@ -30,6 +30,38 @@ my $build = Test::Run::Builder->new(
     license => "mit",
     create_makefile_pl => 'traditional',
     script_files => ["lm-solve"],
+    meta_merge =>
+    {
+        resources =>
+        {
+            repository => "http://svn.berlios.de/svnroot/repos/quad-pres/lm-solve/",
+            homepage => "http://www.shlomifish.org/lm-solve/",
+        },
+        keywords =>
+        [
+            "alice",
+            "brfs",
+            "dfs",
+            "game",
+            "games",
+            "inheritance",
+            "logic",
+            "logic mazes",
+            "mazes",
+            "minotaur",
+            "plank",
+            "pure-perl",
+            "puzzle",
+            "puzzles",
+            "riddle",
+            "riddles",
+            "scan",
+            "search",
+            "swamp",
+            "theseus",
+            "tilt",
+        ],
+    },
 );
 
 $build->create_build_script;
