@@ -1,4 +1,5 @@
     - Changed COPYING to read MIT/X11 instead of Public Domain.
+    - Changed the license in Build.PL to "mit".
 
 0.8.3
     - Added the Changes file.

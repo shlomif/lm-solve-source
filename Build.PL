@@ -19,7 +19,7 @@ my $build = Test::Run::Builder->new(
     {
     },
     dist_version_from => "lib/Games/LMSolve/Base.pm",
-    license => "perl",
+    license => "mit",
     create_makefile_pl => 'traditional',
     script_files => ["lm-solve"],
 );
