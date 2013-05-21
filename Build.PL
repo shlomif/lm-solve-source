@@ -37,7 +37,7 @@ my $build = Test::Run::Builder->new(
     {
         resources =>
         {
-            repository => "http://svn.berlios.de/svnroot/repos/quad-pres/lm-solve/",
+            repository => "http://bitbucket.org/shlomif/lm-solve-source",
             homepage => "http://www.shlomifish.org/lm-solve/",
         },
         keywords =>
