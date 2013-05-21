@@ -28,7 +28,6 @@ my $build = Test::Run::Builder->new(
     dist_author => 'Shlomi Fish <shlomif@iglu.org.il>',
     dist_version_from => "lib/Games/LMSolve/Base.pm",
     license => "mit",
-    create_makefile_pl => 'traditional',
     script_files => ["lm-solve"],
     meta_merge =>
     {

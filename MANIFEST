@@ -20,9 +20,6 @@ lib/Games/LMSolve/Tilt/RedBlue.pm
 lib/Games/LMSolve/Tilt/Single.pm
 LICENSE
 lm-solve
-lm-solve.spec
-lm-solve.spec.in
-Makefile.PL
 MANIFEST
 META.yml                                Module meta-data (added by MakeMaker)
 prepare_package.sh
@@ -33,3 +30,4 @@ TODO
 t/pod-coverage.t
 t/pod.t
 t/regression/regress.sh
+META.json
