@@ -26,6 +26,7 @@ prepare_package.sh
 README
 scripts/gen_use_test.pl
 t/00use.t
+t/cpan-changes.t
 TODO
 t/pod-coverage.t
 t/pod.t
