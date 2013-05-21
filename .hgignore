@@ -1,0 +1,11 @@
+Build
+META.yml
+META.json
+META.yml
+MYMETA.json
+MYMETA.yml
+_build
+blib
+syntax: regexp
+
+^Games-LMSolve-v\d+\.\d+\.\d+(?:/|\.tar\.gz$)
