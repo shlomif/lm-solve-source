@@ -246,19 +246,19 @@ The first plank in "Planks" is the active plank.
 
 B<LM-Solve's Homepage>:
 
-http://vipe.technion.ac.il/~shlomif/lm-solve/
+L<http://www.shlomifish.org/lm-solve/>
 
 B<The Logic Mazes Homepage>:
 
-http://www.logicmazes.com/
+L<http://www.logicmazes.com/>
 
 B<Click Mazes>:
 
-http://www.gjnem.demon.co.uk/
+L<http://www.gjnem.demon.co.uk/>
 
 =head1 AUTHOR
 
-Shlomi Fish <shlomif@vipe.technion.ac.il>
+Shlomi Fish, L<http://www.shlomifish.org/> .
 
 =cut
 
