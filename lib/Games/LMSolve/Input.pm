@@ -47,10 +47,10 @@ Games::LMSolve::Input - input class for LM-Solve
     my $spec =
     {
         'dims' => { 'type' => "xy(integer)", 'required' => 1, },
-        'planks' => { 'type' => "array(start_end(xy(integer)))", 
+        'planks' => { 'type' => "array(start_end(xy(integer)))",
                       'required' => 1,
                     },
-        'layout' => { 'type' => "layout", 'required' => 1,},        
+        'layout' => { 'type' => "layout", 'required' => 1,},
     };
 
     my $input_fields = $input_obj->input_board($filename, $spec);
@@ -90,15 +90,15 @@ sub _initialize
 
 =head2 $self->input_board($file_spec, $spec);
 
-This method accepts two arguments. C<$file_spec> which is the filename, 
-reference to a filehandle, or reference to the text containing the board 
+This method accepts two arguments. C<$file_spec> which is the filename,
+reference to a filehandle, or reference to the text containing the board
 specification.
 
-$spec is a specification of the board given as a reference to a hash. 
+$spec is a specification of the board given as a reference to a hash.
 The keys are the keys inside the file. The values are references
 to hashes containing parameters. The 'required' parameter is given to
 specify that an exception should be thrown if this key was not specified. The
-other parameter (a mandatory one) is type which specified the type of the 
+other parameter (a mandatory one) is type which specified the type of the
 value. Available types are:
 
 =over 8
@@ -118,10 +118,10 @@ reference to an array of (X,Y) pairs.
 
 =item array(start_end(xy(integer)))
 
-An array of [((SX1,SX2)->(EX1,EX2)), ((SX1,SX2)->(EX1,EX2))...] pairs of 
-(X,Y) pairs. Will be returned as a reference to an array of 
+An array of [((SX1,SX2)->(EX1,EX2)), ((SX1,SX2)->(EX1,EX2))...] pairs of
+(X,Y) pairs. Will be returned as a reference to an array of
 
-    { 
+    {
         'start' => { 'x' => $start_x, 'y' => $start_y },
         'end' => { 'x' => $end_x, 'y' => $end_y },
     }
@@ -158,8 +158,8 @@ sub input_board
             die "Failed to read \"$filename\" : $OS_ERROR";
 
         $file_ref = \*I;
-        $filename_str = ($filename eq "-") ? 
-            "standard input" : 
+        $filename_str = ($filename eq "-") ?
+            "standard input" :
             "\"$filename\"";
     }
     elsif (ref($file_spec) eq "GLOB")
@@ -177,7 +177,7 @@ sub input_board
     {
         die "Unknown file specification passed to input_board!";
     }
-    
+
     # Now we have the filehandle *$file_ref opened.
 
     my $line;
@@ -216,8 +216,8 @@ sub input_board
             # Save the line number for safekeeping because a layout or
             # other multi-line value can increase it.
             my $key_line_num = $line_num;
-            
-            
+
+
 
             if (! exists ($spec->{$key}))
             {
@@ -255,9 +255,9 @@ sub input_board
             }
             elsif ($type eq "array(xy(integer))")
             {
-                
+
                 if ($line =~ /^\[\s*$xy_pair(\s*\,\s*$xy_pair)*\s*\]\s*$/)
-                {                    
+                {
                     my @elements = ($line =~ m/$xy_pair/g);
                     my @pairs;
                     while (scalar(@elements))
@@ -284,9 +284,9 @@ sub input_board
                     {
                         my ($sx,$sy,$ex,$ey) = @elements[0 .. 3];
                         @elements = @elements[4 .. $#elements];
-                        push @pairs, 
-                            { 
-                                'start' => { 'x'=>$sx , 'y'=>$sy }, 
+                        push @pairs,
+                            {
+                                'start' => { 'x'=>$sx , 'y'=>$sy },
                                 'end' => { 'x' => $ex, 'y' => $ey }
                             };
                     }
@@ -294,7 +294,7 @@ sub input_board
                 }
                 else
                 {
-                    $gen_exception->("Key \"$key\" expects an array of integral (sx,sy) -> (ex,ey) start/end x,y pairs as a value");                    
+                    $gen_exception->("Key \"$key\" expects an array of integral (sx,sy) -> (ex,ey) start/end x,y pairs as a value");
                 }
             }
             elsif ($type eq "layout")
@@ -345,7 +345,7 @@ sub input_board
             }
         }
     }
-    
+
     return $ret;
 }
 
@@ -364,7 +364,7 @@ sub input_horiz_vert_walls_layout
     my $lines_ptr = shift;
 
     my (@vert_walls, @horiz_walls);
-    
+
     my $line;
     my $line_num = 0;
     my $y;
@@ -380,7 +380,7 @@ sub input_horiz_vert_walls_layout
         my $msg = shift;
         die ($msg . " at line " . ($line_num+$lines_ptr->{'line_num'}+1));
     };
-    
+
 
     my $input_horiz_wall = sub {
         $line = $get_next_line->();
@@ -407,7 +407,7 @@ sub input_horiz_vert_walls_layout
         }
         push @vert_walls, [ (map { $_ eq "|" } split(//, $line)) ];
     };
-    
+
 
 
     for($y=0;$y<$height;$y++)

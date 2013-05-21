@@ -31,7 +31,7 @@ sub pack_state
     return join(",", @$state_vector);
 }
 
-# A function that accepts an atom that represents a state 
+# A function that accepts an atom that represents a state
 # and returns an array ref that represents it.
 sub unpack_state
 {
@@ -40,7 +40,7 @@ sub unpack_state
     return [ split(/,/, $state) ];
 }
 
-# Accept an atom that represents a state and output a 
+# Accept an atom that represents a state and output a
 # user-readable string that describes it.
 sub display_state
 {
@@ -58,7 +58,7 @@ sub check_if_final_state
 }
 
 # This function enumerates the moves accessible to the state.
-# If it returns a move, it still does not mean that it is a valid 
+# If it returns a move, it still does not mean that it is a valid
 # one. I.e: it is possible that it is illegal to perform it.
 sub enumerate_moves
 {

@@ -15,14 +15,14 @@ sub input_board
 {
     my $self = shift;
     my $filename = shift;
-    
-    my $spec = 
+
+    my $spec =
     {
         'dims' => { 'type' => "xy(integer)", 'required' => 1 },
         'red_start' => { 'type' => "xy(integer)", 'required' => 1 },
         'red_goal' => {'type' => "xy(integer)", 'required' => 1 },
         'blue_start' => { 'type' => "xy(integer)", 'required' => 1 },
-        'blue_goal' => {'type' => "xy(integer)", 'required' => 1 },        
+        'blue_goal' => {'type' => "xy(integer)", 'required' => 1 },
         'layout' => { 'type' => "layout", 'required' => 1},
     };
 
@@ -36,29 +36,29 @@ sub input_board
     my ($blue_start_x, $blue_start_y) = @{$input_fields->{'blue_start'}->{'value'}}{'x','y'};
     my ($blue_goal_x, $blue_goal_y) = @{$input_fields->{'blue_goal'}->{'value'}}{'x','y'};
 
-    
+
     if (($red_start_x >= $width) || ($red_start_y >= $height))
     {
-        die "The starting position of the red block is out of bounds of the board in file \"$filename\"!\n";        
+        die "The starting position of the red block is out of bounds of the board in file \"$filename\"!\n";
     }
 
     if (($red_goal_x >= $width) || ($red_goal_y >= $height))
     {
-        die "The goal position of the red block is out of bounds of the board in file \"$filename\"!\n";        
+        die "The goal position of the red block is out of bounds of the board in file \"$filename\"!\n";
     }
 
     if (($blue_start_x >= $width) || ($blue_start_y >= $height))
     {
-        die "The starting position of the blue block is out of bounds of the board in file \"$filename\"!\n";        
+        die "The starting position of the blue block is out of bounds of the board in file \"$filename\"!\n";
     }
 
     if (($blue_goal_x >= $width) || ($blue_goal_y >= $height))
     {
-        die "The goal position of the blue block is out of bounds of the board in file \"$filename\"!\n";        
+        die "The goal position of the blue block is out of bounds of the board in file \"$filename\"!\n";
     }
-    
 
-    my ($horiz_walls, $vert_walls) = 
+
+    my ($horiz_walls, $vert_walls) =
         $input_obj->input_horiz_vert_walls_layout($width, $height, $input_fields->{'layout'});
 
     $self->{'width'} = $width;
@@ -67,7 +67,7 @@ sub input_board
 
     $self->{'horiz_walls'} = $horiz_walls;
     $self->{'vert_walls'} = $vert_walls;
-    
+
     return [ $red_start_x, $red_start_y, $blue_start_x, $blue_start_y];
 }
 
@@ -128,12 +128,12 @@ sub perform_move
 
     my ($rx, $ry, $bx, $by) = @$coords;
 
-    my ($red_new_coords, $red_intermediate_states) = 
+    my ($red_new_coords, $red_intermediate_states) =
         $self->move_ball_to_end([ $rx, $ry], $move);
 
-    my ($blue_new_coords, $blue_intermediate_states) = 
+    my ($blue_new_coords, $blue_intermediate_states) =
         $self->move_ball_to_end([ $bx, $by], $move);
-    
+
     return [ @$red_new_coords, @$blue_new_coords ];
 }
 

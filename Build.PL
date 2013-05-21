@@ -19,7 +19,7 @@ my $build = Test::Run::Builder->new(
     {
         "Test::More" => 0,
     },
-    requires => 
+    requires =>
     {
         'English' => 0,
         'Exporter' => 0,

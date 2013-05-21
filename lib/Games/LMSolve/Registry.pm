@@ -11,7 +11,7 @@ Games::LMSolve::Registry - the registry of all LM-Solve drivers.
 
 This is a registry of all LM-Solve drivers.
 
-=head1 METHODS 
+=head1 METHODS
 =cut
 
 use Games::LMSolve;

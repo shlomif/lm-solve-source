@@ -25,7 +25,7 @@ sub input_board
 
     my $filename = shift;
 
-    my $spec = 
+    my $spec =
     {
         'dims' => {'type' => "xy(integer)", 'required' => 1},
         'layout' => {'type' => "layout", 'required' => 1},
@@ -37,7 +37,7 @@ sub input_board
     my ($width, $height) = @{$input_fields->{'dims'}->{'value'}}{'x','y'};
 
     my (@board);
-    
+
     my $line;
     my $line_number=0;
     my $lines_ref = $input_fields->{'layout'}->{'value'};
@@ -54,8 +54,8 @@ sub input_board
 
     my $gen_exception = sub {
         my $text = shift;
-        die "$text on $filename at line " . 
-            ($input_fields->{'layout'}->{'line_num'} + $line_number + 1) . 
+        die "$text on $filename at line " .
+            ($input_fields->{'layout'}->{'line_num'} + $line_number + 1) .
             "!\n";
     };
 
@@ -72,17 +72,17 @@ sub input_board
         {
             $line =~ s/^\s+//;
             if ($line =~ /\S/)
-            {                
+            {
                 if ($line =~ /^\[([^\]]*)\]/)
                 {
                     my $flags_string = uc($1);
                     my @flags = (split(/,/, $flags_string));
                     my @dirs = (grep { exists($cell_dirs{$_}) } @flags);
                     my @flag_flags = (grep { exists($cell_flags{$_}) } @flags);
-                    my @unknown_flags = 
-                        (grep 
-                            { 
-                                (!exists($cell_dirs{$_})) && 
+                    my @unknown_flags =
+                        (grep
+                            {
+                                (!exists($cell_dirs{$_})) &&
                                 (!exists($cell_flags{$_}))
                             }
                             @flags
@@ -106,7 +106,7 @@ sub input_board
                         $start_x = $x;
                         $start_y = $y;
                     }
-                    $x++;                    
+                    $x++;
                     if ($x == $width)
                     {
                         $x = 0;
@@ -157,7 +157,7 @@ sub pack_state
     return pack("ccc", @{$state_vector});
 }
 
-# A function that accepts an atom that represents a state 
+# A function that accepts an atom that represents a state
 # and returns an array ref that represents it.
 sub unpack_state
 {
@@ -166,7 +166,7 @@ sub unpack_state
     return [ unpack("ccc", $state) ];
 }
 
-# Accept an atom that represents a state and output a 
+# Accept an atom that represents a state and output a
 # user-readable string that describes it.
 sub display_state
 {
@@ -182,7 +182,7 @@ sub check_if_unsolvable
 {
     my $self = shift;
     my $coords = shift;
-    return ($coords->[2] == 0);    
+    return ($coords->[2] == 0);
 }
 
 sub check_if_final_state
@@ -194,7 +194,7 @@ sub check_if_final_state
 }
 
 # This function enumerates the moves accessible to the state.
-# If it returns a move, it still does not mean that it is a valid 
+# If it returns a move, it still does not mean that it is a valid
 # one. I.e: it is possible that it is illegal to perform it.
 sub enumerate_moves
 {
@@ -221,7 +221,7 @@ sub perform_move
     $new_coords[1] += $offsets->[1];
 
     my $new_cell = $self->{'board'}->[$new_coords[1]][$new_coords[0]]->{'flags'};
-    
+
     # Check if we are out of the bounds of the board.
     if (($new_coords[0] < 0) || ($new_coords[0] >= $self->{'width'}) ||
         ($new_coords[1] < 0) || ($new_coords[1] >= $self->{'height'}) ||
@@ -230,7 +230,7 @@ sub perform_move
     {
         return undef;
     }
-    
+
     if (exists($new_cell->{'ADD'}))
     {
         $new_coords[2]++;

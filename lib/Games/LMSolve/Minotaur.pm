@@ -16,7 +16,7 @@ sub input_board
     my $self = shift;
     my $filename = shift;
 
-    my $spec = 
+    my $spec =
     {
         (map { $_ => { 'type' => "xy(integer)", 'required' => 1} } (qw(dims thes mino exit))),
         'layout' => { 'type' => "layout", 'required' => 1},
@@ -24,8 +24,8 @@ sub input_board
 
     my $input_obj = Games::LMSolve::Input->new();
     my $input_fields = $input_obj->input_board($filename, $spec);
-    
-    my ($width, $height) = @{$input_fields->{'dims'}->{'value'}}{'x','y'};    
+
+    my ($width, $height) = @{$input_fields->{'dims'}->{'value'}}{'x','y'};
     my ($thes_x, $thes_y) = @{$input_fields->{'thes'}->{'value'}}{'x','y'};
     my ($mino_x, $mino_y) = @{$input_fields->{'mino'}->{'value'}}{'x','y'};
     my ($exit_x, $exit_y) = @{$input_fields->{'exit'}->{'value'}}{'x','y'};
@@ -39,13 +39,13 @@ sub input_board
     {
         die "The minotaur is out of bounds of the board in file \"$filename\"!\n";
     }
-    
+
     if (($exit_x >= $width) || ($exit_y >= $height))
     {
         die "The exit is out of bounds of the board in file \"$filename\"!\n";
     }
 
-    my ($horiz_walls, $vert_walls) = 
+    my ($horiz_walls, $vert_walls) =
         $input_obj->input_horiz_vert_walls_layout($width, $height, $input_fields->{'layout'});
 
     $self->{'width'} = $width;
@@ -64,7 +64,7 @@ sub _mino_move
     my $horiz_walls = $self->{'horiz_walls'};
     my $vert_walls = $self->{'vert_walls'};
 
-    my ($thes_x, $thes_y, $mino_x, $mino_y) = @_; 
+    my ($thes_x, $thes_y, $mino_x, $mino_y) = @_;
     for(my $t=0;$t<2;$t++)
     {
         if (($thes_x < $mino_x) && (! $vert_walls->[$mino_y][$mino_x]))
@@ -97,7 +97,7 @@ sub pack_state
     return pack("cccc", @{$state_vector});
 }
 
-# A function that accepts an atom that represents a state 
+# A function that accepts an atom that represents a state
 # and returns an array ref that represents it.
 sub unpack_state
 {
@@ -106,7 +106,7 @@ sub unpack_state
     return [ unpack("cccc", $state) ];
 }
 
-# Accept an atom that represents a state and output a 
+# Accept an atom that represents a state and output a
 # user-readable string that describes it.
 sub display_state
 {
@@ -137,7 +137,7 @@ sub check_if_final_state
 
 
 # This function enumerates the moves accessible to the state.
-# If it returns a move, it still does not mean that it is a valid 
+# If it returns a move, it still does not mean that it is a valid
 # one. I.e: it is possible that it is illegal to perform it.
 sub enumerate_moves
 {
@@ -145,11 +145,11 @@ sub enumerate_moves
 
     my $horiz_walls = $self->{'horiz_walls'};
     my $vert_walls = $self->{'vert_walls'};
-    
+
     my $coords = shift;
 
     my ($thes_x, $thes_y) = @$coords[0..1];
-    
+
     my @moves;
 
     if (! $vert_walls->[$thes_y][$thes_x])
@@ -173,11 +173,11 @@ sub enumerate_moves
     return @moves;
 }
 
-my %translate_moves = 
+my %translate_moves =
     (
-        "u" => [0, -1], 
-        "d" => [0, 1], 
-        "l" => [-1,0], 
+        "u" => [0, -1],
+        "d" => [0, 1],
+        "l" => [-1,0],
         "r" => [1,0],
         "w" => [0,0],
     );

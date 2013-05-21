@@ -29,10 +29,10 @@ sub input_board
     my $spec =
     {
         'dims' => { 'type' => "xy(integer)", 'required' => 1, },
-        'planks' => { 'type' => "array(start_end(xy(integer)))", 
+        'planks' => { 'type' => "array(start_end(xy(integer)))",
                       'required' => 1,
                     },
-        'layout' => { 'type' => "layout", 'required' => 1,},        
+        'layout' => { 'type' => "layout", 'required' => 1,},
     };
 
     my $input_obj = Games::LMSolve::Input->new();
@@ -68,13 +68,13 @@ sub input_board
             }
             $x++;
         }
-        push @board, $l;        
+        push @board, $l;
     }
     if (!defined($goal_x))
     {
         die "The Goal was not defined in the layout";
     }
-    
+
     my $planks_in = $input_fields->{'planks'}->{'value'};
 
     my @planks;
@@ -94,11 +94,11 @@ sub input_board
             {
                 die "Plank cannot be placed at point ($end_x,$end_y)!";
             }
-        };        
+        };
 
         my $plank_str = "Plank ($start_x,$start_y) ==> ($end_x,$end_y)";
 
-        if (($start_x >= $width) || ($end_x >= $width) || 
+        if (($start_x >= $width) || ($end_x >= $width) ||
             ($start_y >= $height) || ($end_y >= $height))
         {
             die "$plank_str is out of the boundaries of the board";
@@ -159,11 +159,11 @@ sub input_board
             {
                 die "$plank_str is not aligned horizontally or vertically.";
             }
-            return 
-                { 
-                    'len' => ($end_x - $start_x), 
-                    'start' => 
-                        { 
+            return
+                {
+                    'len' => ($end_x - $start_x),
+                    'start' =>
+                        {
                             'x' => $start_x,
                             'y' => $start_y,
                         },
@@ -175,7 +175,7 @@ sub input_board
             die "$plank_str is not aligned horizontally or vertically.";
         }
     };
-    
+
     foreach my $p (@$planks_in)
     {
         push @planks, $get_plank->($p);
@@ -187,7 +187,7 @@ sub input_board
     $self->{'goal_y'} = $goal_y;
     $self->{'board'} = \@board;
     $self->{'plank_lens'} = [ map { $_->{'len'} } @planks ];
-    
+
     my $state = [ 0,  (map { ($_->{'start'}->{'x'}, $_->{'start'}->{'y'}, (($_->{'dir'} eq "E") ? 0 : ($_->{'dir'} eq "SE") ? 2 : 1)) } @planks) ];
     $self->_process_plank_data($state);
 
@@ -209,27 +209,27 @@ sub _process_plank_data
 
     my $active = $state->[0];
 
-    my @planks = 
-        (map 
-            { 
-                { 
-                    'len' => $self->{'plank_lens'}->[$_], 
-                    'x' => $state->[$_*3+1], 
-                    'y' => $state->[$_*3+1+1], 
+    my @planks =
+        (map
+            {
+                {
+                    'len' => $self->{'plank_lens'}->[$_],
+                    'x' => $state->[$_*3+1],
+                    'y' => $state->[$_*3+1+1],
                     'dir' => $state->[$_*3+2+1],
                     'active' => 0,
-                } 
-            } 
+                }
+            }
             (0 .. (scalar(@{$self->{'plank_lens'}}) - 1))
         );
 
-   
+
     foreach my $p (@planks)
     {
         my $p_dir = $p->{'dir'};
         my $dir = ($p_dir == 0) ? "E" : ($p_dir == 1) ? "S" : "SE";
         $p->{'dir'} = $dir;
-    
+
         $p->{'end_x'} = $p->{'x'} + $cell_dirs{$dir}->[0] * $p->{'len'};
         $p->{'end_y'} = $p->{'y'} + $cell_dirs{$dir}->[1] * $p->{'len'};
     }
@@ -315,8 +315,8 @@ sub check_if_final_state
     my $goal_x = $self->{'goal_x'};
     my $goal_y = $self->{'goal_y'};
 
-    return (scalar(grep { (($_->{'x'} == $goal_x) && ($_->{'y'} == $goal_y)) || 
-                  (($_->{'end_x'} == $goal_x) && ($_->{'end_y'} == $goal_y)) 
+    return (scalar(grep { (($_->{'x'} == $goal_x) && ($_->{'y'} == $goal_y)) ||
+                  (($_->{'end_x'} == $goal_x) && ($_->{'end_y'} == $goal_y))
                 }
                 @$plank_data) > 0);
 }
@@ -381,7 +381,7 @@ sub enumerate_moves
                     {
                         my $ix = $x + $cell_dirs{$dir}->[0] * $offset;
                         my $iy = $y + $cell_dirs{$dir}->[1] * $offset;
-                        
+
                         if ($board->[$iy]->[$ix])
                         {
                             next DIR_LOOP;
@@ -461,7 +461,7 @@ sub perform_move
     {
         $dir_idx = 2;
         $y -= $self->{'plank_lens'}->[$p];
-        $x -= $self->{'plank_lens'}->[$p];        
+        $x -= $self->{'plank_lens'}->[$p];
     }
     elsif ($dir eq "SE")
     {
@@ -474,7 +474,7 @@ sub perform_move
     @$new_state[(1+$p*3) .. (1+$p*3+2)] = ($x,$y,$dir_idx);
 
     $self->_process_plank_data($new_state);
-    
+
     return $new_state;
 }
 

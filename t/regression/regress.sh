@@ -20,8 +20,8 @@ for TYPE in "alice alice" "minotaur minotaur" "plank plank" \
         echo "$dir does not exist"
     fi
     mkdir -p checksums/$dir
-    (cd ./layouts/$dir/; ls) | 
-        (while read T ; do 
+    (cd ./layouts/$dir/; ls) |
+        (while read T ; do
             if [ -f ./layouts/$dir/$T ] ; then
                 run_lm_solve brfs
                 run_lm_solve dfs

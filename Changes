@@ -1,5 +1,7 @@
     - Remove lm-solve.spec.in and lm-solve.spec .
     - Remove Makefile.PL.
+    - Add t/style-trailing-space.t .
+        - Remove trailing space.
 
 0.8.4    Sun Jun 28 12:26:18 IDT 2009
     - Changed COPYING to read MIT/X11 instead of Public Domain.

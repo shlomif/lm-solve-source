@@ -19,7 +19,7 @@ use vars qw(@ISA @EXPORT_OK);
 
 use vars qw(%cell_dirs);
 
-%cell_dirs = 
+%cell_dirs =
     (
         'N' => [0,-1],
         'NW' => [-1,-1],
@@ -40,7 +40,7 @@ Games::LMSolve::Base - base class for puzzle solvers.
     package MyPuzzle::Solver;
 
     use Games::LMSolve::Base;
-    
+
     @ISA = qw(Games::LMSolve::Base);
 
     # Override these methods:
@@ -53,7 +53,7 @@ Games::LMSolve::Base - base class for puzzle solvers.
     sub enumerate_moves { ... }
     sub perform_move { ... }
 
-    # Optionally: 
+    # Optionally:
     sub render_move { ... }
     sub check_if_unsolvable { ... }
 
@@ -64,7 +64,7 @@ Games::LMSolve::Base - base class for puzzle solvers.
     $self->solve_board($filename);
 
 =head1 DESCRIPTION
-    
+
 This class implements a generic solver for single player games. In order
 to use it, one must inherit from it and implement some abstract methods.
 Afterwards, its interface functions can be invoked to actually solve
@@ -92,7 +92,7 @@ sub new
 
     $self->initialize(@_);
 
-    return $self;    
+    return $self;
 }
 
 sub initialize
@@ -139,7 +139,7 @@ sub main
     my $run_time_states_display = 0;
 
     #my $p = Getopt::Long::Parser->new();
-    if (! GetOptions('rle!' => \$to_rle, 
+    if (! GetOptions('rle!' => \$to_rle,
         'output-states!' => \$output_states,
         'method=s' => \$scan,
         'rtd!' => \$run_time_states_display,
@@ -169,7 +169,7 @@ sub main
 =head1 METHODS TO OVERRIDE
 
 =cut
-    
+
 
 
 
@@ -177,13 +177,13 @@ sub _die_on_abstract_function
 {
     my ($package, $filename, $line, $subroutine, $hasargs,
         $wantarray, $evaltext, $is_require, $hints, $bitmask) = caller(1);
-    die ("The abstract function $subroutine() was " . 
+    die ("The abstract function $subroutine() was " .
         "called, while it needs to be overrided by the derived class.\n");
 }
 
 =head2 input_board($self, $file_spec)
 
-This method is responsible to read the "board" (the permanent parameters) of 
+This method is responsible to read the "board" (the permanent parameters) of
 the puzzle and its initial state. It should place the board in the object's
 keys, and return the initial state. (in unpacked format).
 
@@ -204,7 +204,7 @@ sub input_board
 =head2 pack_state($self, $state_vector)
 
 This function accepts a state in unpacked form and should return it in packed
-format. A state in unpacked form can be any perl scalar (as complex as you 
+format. A state in unpacked form can be any perl scalar (as complex as you
 like). A state in packed form must be a string.
 
 =cut
@@ -223,7 +223,7 @@ expanded form.
 
 =cut
 
-# A function that accepts an atom that represents a state 
+# A function that accepts an atom that represents a state
 # and returns an array ref that represents it.
 sub unpack_state
 {
@@ -232,12 +232,12 @@ sub unpack_state
 
 =head2 display_state($self, $packed_state)
 
-Accepts a packed state and should return the user-readable string 
+Accepts a packed state and should return the user-readable string
 representation of the state.
 
 =cut
 
-# Accept an atom that represents a state and output a 
+# Accept an atom that represents a state and output a
 # user-readable string that describes it.
 sub display_state
 {
@@ -246,7 +246,7 @@ sub display_state
 
 =head2 check_if_final_state($self, $state_vector)
 
-This function should return 1 if the expanded state $state_vector is 
+This function should return 1 if the expanded state $state_vector is
 a final state, and the game is over.
 
 =cut
@@ -264,7 +264,7 @@ that can be performed on this state.
 =cut
 
 # This function enumerates the moves accessible to the state.
-# If it returns a move, it still does not mean that this move is a valid 
+# If it returns a move, it still does not mean that this move is a valid
 # one. I.e: it is possible that it is illegal to perform it.
 sub enumerate_moves
 {
@@ -331,12 +331,12 @@ sub _solve_brfs_or_dfs
     my $state_collection = $self->{'state_collection'};
     my $is_dfs = shift;
     my %args = @_;
-    
+
     my $run_time_display = $self->{'cmd_line'}->{'rt_states_display'};
     my $rtd_callback = $self->{'run_time_display_callback'};
     my $max_iters = $args{'max_iters'} || (-1);
     my $check_iters = ($max_iters >= 0);
-    
+
     my (@queue, $state, $coords, $depth, @moves, $new_state);
 
     if (exists($args{'initial_state'}))
@@ -380,7 +380,7 @@ sub _solve_brfs_or_dfs
             );
             # print ((" " x $depth) . join(",", @$coords) . " M=" . $self->render_move($state_collection->{$state}->{'m'}) ."\n");
         }
-        
+
         if ($self->check_if_unsolvable($coords))
         {
             next;
@@ -391,7 +391,7 @@ sub _solve_brfs_or_dfs
             @ret = ("solved", $state);
             goto Return;
         }
-        
+
         @moves = $self->enumerate_moves($coords);
 
         foreach my $m (@moves)
@@ -402,21 +402,21 @@ sub _solve_brfs_or_dfs
             {
                 next;
             }
-            
+
             $new_state = $self->pack_state($new_coords);
             if (! exists($state_collection->{$new_state}))
             {
-                $state_collection->{$new_state} = 
+                $state_collection->{$new_state} =
                     {
-                        'p' => $state, 
-                        'm' => $m, 
+                        'p' => $state,
+                        'm' => $m,
                         'd' => ($depth+1)
                     };
                 push @queue, $new_state;
             }
         }
-    }    
-    
+    }
+
     Return:
 
     return @ret;
@@ -434,7 +434,7 @@ sub _run_length_encoding
     {
         if ($m eq $prev_m)
         {
-            $count++;            
+            $count++;
         }
         else
         {
@@ -445,20 +445,20 @@ sub _run_length_encoding
     }
     push @ret, [$prev_m, $count];
 
-    return @ret;    
+    return @ret;
 }
 
 
 sub _solve_state
 {
     my $self = shift;
-    
+
     my $initial_coords = shift;
-    
+
     my $state = $self->pack_state($initial_coords);
     $self->{'state_collection'}->{$state} = {'p' => undef, 'd' => 0};
 
-    return 
+    return
         $self->run_scan(
             'initial_state' => $state,
             @_
@@ -467,8 +467,8 @@ sub _solve_state
 
 =head2 $self->solve_board($file_spec, %args)
 
-Solves the board specification specified in $file_spec. %args specifies 
-optional arguments. Currently there is one: 'max_iters' that specifies the 
+Solves the board specification specified in $file_spec. %args specifies
+optional arguments. Currently there is one: 'max_iters' that specifies the
 maximal iterations to run.
 
 Returns whatever run_scan returns.
@@ -477,7 +477,7 @@ Returns whatever run_scan returns.
 sub solve_board
 {
     my $self = shift;
-    
+
     my $filename = shift;
 
     my $initial_coords = $self->input_board($filename);
@@ -490,10 +490,10 @@ sub solve_board
 Continues the current scan. %args may contain the 'max_iters' parameter
 to specify a maximal iterations limit.
 
-Returns two values. The first is a progress indicator. "solved" means the 
+Returns two values. The first is a progress indicator. "solved" means the
 puzzle was solved. "unsolved" means that all the states were covered and
 the puzzle was proven to be unsolvable. "interrupted" means that the
-scan was interrupted in the middle, and could be proved to be either 
+scan was interrupted in the middle, and could be proved to be either
 solvable or unsolvable.
 
 The second argument is the final state and is valid only if the progress
@@ -507,7 +507,7 @@ sub run_scan
 
     my %args = @_;
 
-    return 
+    return
         $scan_functions{$self->{'cmd_line'}->{'scan'}}->(
             $self,
             %args
@@ -545,13 +545,13 @@ sub display_solution
     my $output_states = $self->{'cmd_line'}->{'output_states'};
     my $to_rle = $self->{'cmd_line'}->{'to_rle'};
 
-    my $echo_state = 
+    my $echo_state =
         sub {
             my $state = shift;
-            return $output_states ? 
+            return $output_states ?
                 ($self->display_state($state) . ": Move = ") :
                 "";
-        };    
+        };
 
     print $ret[0], "\n";
 
@@ -589,7 +589,7 @@ sub display_solution
             for($num_state=0;$num_state<scalar(@moves);$num_state++)
             {
                 print $echo_state->($states[$num_state]) . $self->render_move($moves[$num_state]) . "\n";
-            }            
+            }
         }
         if ($output_states)
         {
@@ -645,7 +645,7 @@ L<Games::LMSolve::Input>
 
 Shlomi Fish, L<http://www.shlomifish.org/>
 
-=cut 
+=cut
 
 1;
 

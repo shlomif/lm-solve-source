@@ -4,7 +4,7 @@ use strict;
 
 use Test::More tests => 12;
 
-BEGIN 
+BEGIN
 {
 use_ok("Games::LMSolve::Numbers");
 use_ok("Games::LMSolve::Base");

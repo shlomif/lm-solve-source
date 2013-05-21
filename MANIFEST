@@ -29,5 +29,6 @@ t/00use.t
 TODO
 t/pod-coverage.t
 t/pod.t
+t/style-trailing-space.t
 t/regression/regress.sh
 META.json

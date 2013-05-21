@@ -26,7 +26,7 @@ Games::LMSolve - base class for LM-Solve solvers factories
     package MyReg;
 
     use Games::LMSolve;
-    
+
     @ISA = qw(Games::LMSolve);
 
     use MyPuzzle::Solver;
@@ -86,7 +86,7 @@ sub new
 
     $self->_initialize(@_);
 
-    return $self;    
+    return $self;
 }
 
 sub _initialize
@@ -94,7 +94,7 @@ sub _initialize
     my $self = shift;
 
     my %args = @_;
-    
+
     $self->{'games_solvers'} = {};
 
     $self->register_all_solvers();
@@ -103,7 +103,7 @@ sub _initialize
     {
         $self->set_default_variant($args{'default_variant'});
     }
-    
+
     return 0;
 }
 
@@ -172,8 +172,8 @@ sub main
 
     Getopt::Long::Configure('pass_through');
     GetOptions(
-        "g|game=s" => \$variant, 
-        'help|h|?' => \$help, 
+        "g|game=s" => \$variant,
+        'help|h|?' => \$help,
         'man' => \$man
         ) or pod2usage(2);
 

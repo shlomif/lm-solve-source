@@ -15,8 +15,8 @@ sub input_board
 {
     my $self = shift;
     my $filename = shift;
-    
-    my $spec = 
+
+    my $spec =
     {
         'dims' => { 'type' => "xy(integer)", 'required' => 1 },
         'start' => { 'type' => "xy(integer)", 'required' => 1 },
@@ -31,10 +31,10 @@ sub input_board
     my ($width, $height) = @{$input_fields->{'dims'}->{'value'}}{'x','y'};
     my ($start_x, $start_y) = @{$input_fields->{'start'}->{'value'}}{'x','y'};
 
-    
+
     if (($start_x >= $width) || ($start_y >= $height))
     {
-        die "The Starting position is out of bounds of the board in file \"$filename\"!\n";        
+        die "The Starting position is out of bounds of the board in file \"$filename\"!\n";
     }
 
     my @goals_map = map { [ (0) x $width ] } (1 .. $height);
@@ -52,7 +52,7 @@ sub input_board
         $goal_id++;
     }
 
-    my ($horiz_walls, $vert_walls) = 
+    my ($horiz_walls, $vert_walls) =
         $input_obj->input_horiz_vert_walls_layout($width, $height, $input_fields->{'layout'});
 
     $self->{'width'} = $width;
@@ -69,9 +69,9 @@ sub input_board
     {
         $dest_goals_bitmap |= (1 << $i);
     }
-    
+
     $self->{'dest_goals_bitmap'} = $dest_goals_bitmap;
-    
+
     return [ $start_x, $start_y, $reached_goals_bitmap ];
 }
 
@@ -122,7 +122,7 @@ sub perform_move
     my $coords = shift;
     my $move = shift;
 
-    my ($new_coords, $intermediate_states) = 
+    my ($new_coords, $intermediate_states) =
         $self->move_ball_to_end($coords, $move);
 
     my $goal_bitmap = $coords->[2];
@@ -138,7 +138,7 @@ sub perform_move
             $goal_bitmap |= (1<<$goal);
         }
     }
-    
+
     return [ @$new_coords, $goal_bitmap];
 }
 
