@@ -25,6 +25,7 @@ my $build = Test::Run::Builder->new(
         'Exporter' => 0,
         'Getopt::Long' => 0,
         'Pod::Usage' => 0,
+        'perl' => '5.008',
         'strict' => 0,
         'vars' => 0,
         'warnings' => 0,

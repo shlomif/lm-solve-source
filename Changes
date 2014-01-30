@@ -1,3 +1,6 @@
+0.8.6   2014-01-30
+    - Minimum perl version set to 5.8.x (CPANTS KWalitee).
+
 0.8.5   2013-05-22
     - Remove lm-solve.spec.in and lm-solve.spec .
     - Remove Makefile.PL.
