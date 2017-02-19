@@ -1,3 +1,7 @@
+0.10.0  2017-02-19
+    - Convert the build system to Dist-Zilla.
+    - Moved the repository to GitHub.
+
 0.8.6   2014-01-30
     - Minimum perl version set to 5.8.x (CPANTS KWalitee).
 
