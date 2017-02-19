@@ -1,6 +1,6 @@
 This is LM-Solve, a command-line program to automaticalluy solve
 some types of the Logic Mazes presented on the Logic Mazes site
-(http://www.logicmazes.com/).
+( http://www.logicmazes.com/ ).
 
 Read the file INSTALL to learn how to install the program, and then
 you can invoke the program by using the "lm-solve" executable.
