@@ -369,6 +369,21 @@ sub enumerate_moves
                     {
                         next;
                     }
+                    my $check_cb = sub {
+                        my ($move_x, $move_y, $move_end_x, $move_end_y) = @_;
+                        return (($x == $move_x) && ($y == $move_y) &&
+                            ($other_x == $move_end_x) && ($other_y == $move_end_y));
+                    };
+                    # Check that we're not moving one plank on top of the
+                    # other or itself.
+                    for my $plank (@$plank_data)
+                    {
+                        if ($check_cb->(@$plank{qw(x y end_x end_y)}) ||
+                            $check_cb->(@$plank{qw(end_x end_y x y)}))
+                        {
+                            next DIR_LOOP;
+                        }
+                    }
 
                     # Check if there is a stump at the other end-point
                     if (! $board->[$other_y]->[$other_x])
