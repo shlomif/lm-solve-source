@@ -338,6 +338,18 @@ sub enumerate_moves
 
     my @moves;
 
+    my %current;
+    my $serialize = sub {
+        return join"\t", @_;
+    };
+
+    foreach my $plank (@$plank_data)
+    {
+        $current{$serialize->(@$plank{qw(x y end_x end_y)})} =
+        $current{$serialize->(@$plank{qw(end_x end_y x y)})} =
+            1;
+    }
+
     for my $to_move_idx (0 .. $#$plank_data)
     {
         my $to_move = $plank_data->[$to_move_idx];
@@ -369,20 +381,11 @@ sub enumerate_moves
                     {
                         next;
                     }
-                    my $check_cb = sub {
-                        my ($move_x, $move_y, $move_end_x, $move_end_y) = @_;
-                        return (($x == $move_x) && ($y == $move_y) &&
-                            ($other_x == $move_end_x) && ($other_y == $move_end_y));
-                    };
                     # Check that we're not moving one plank on top of the
                     # other or itself.
-                    for my $plank (@$plank_data)
+                    if (exists $current{$serialize->($x,$y,$other_x,$other_y)})
                     {
-                        if ($check_cb->(@$plank{qw(x y end_x end_y)}) ||
-                            $check_cb->(@$plank{qw(end_x end_y x y)}))
-                        {
-                            next DIR_LOOP;
-                        }
+                        next DIR_LOOP;
                     }
 
                     # Check if there is a stump at the other end-point
