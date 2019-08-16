@@ -7,7 +7,7 @@ use vars qw(@ISA);
 
 use Games::LMSolve::Plank::Base;
 
-@ISA=qw(Games::LMSolve::Plank::Base);
+@ISA = qw(Games::LMSolve::Plank::Base);
 
 sub initialize
 {

@@ -11,23 +11,22 @@ use Exporter;
 
 use vars qw(@ISA @EXPORT_OK);
 
-@ISA=qw(Exporter);
+@ISA = qw(Exporter);
 
-@EXPORT_OK=qw(%cell_dirs);
+@EXPORT_OK = qw(%cell_dirs);
 
 use vars qw(%cell_dirs);
 
-%cell_dirs =
-    (
-        'N' => [0,-1],
-        'NW' => [-1,-1],
-        'NE' => [1,-1],
-        'S' => [0,1],
-        'SE' => [1,1],
-        'SW' => [-1,1],
-        'E' => [1,0],
-        'W' => [-1,0],
-    );
+%cell_dirs = (
+    'N'  => [ 0,  -1 ],
+    'NW' => [ -1, -1 ],
+    'NE' => [ 1,  -1 ],
+    'S'  => [ 0,  1 ],
+    'SE' => [ 1,  1 ],
+    'SW' => [ -1, 1 ],
+    'E'  => [ 1,  0 ],
+    'W'  => [ -1, 0 ],
+);
 
 =head1 NAME
 
@@ -97,8 +96,8 @@ sub initialize
 {
     my $self = shift;
 
-    $self->{'state_collection'} = { };
-    $self->{'cmd_line'} = { 'scan' => "brfs", };
+    $self->{'state_collection'} = {};
+    $self->{'cmd_line'}         = { 'scan' => "brfs", };
 
     $self->{'num_iters'} = 0;
 
@@ -111,17 +110,16 @@ Actually solve the board based on the arguments in the command line.
 
 =cut
 
-my %scan_functions =
-(
+my %scan_functions = (
     'dfs' => sub {
         my $self = shift;
 
-        return $self->_solve_brfs_or_dfs(1, @_);
+        return $self->_solve_brfs_or_dfs( 1, @_ );
     },
     'brfs' => sub {
         my $self = shift;
 
-        return $self->_solve_brfs_or_dfs(0, @_);
+        return $self->_solve_brfs_or_dfs( 0, @_ );
     },
 );
 
@@ -131,30 +129,34 @@ sub main
 
     # This is a flag that specifies whether to present the moves in Run-Length
     # Encoding.
-    my $to_rle = 1;
-    my $output_states = 0;
-    my $scan = "brfs";
+    my $to_rle                  = 1;
+    my $output_states           = 0;
+    my $scan                    = "brfs";
     my $run_time_states_display = 0;
 
     #my $p = Getopt::Long::Parser->new();
-    if (! GetOptions('rle!' => \$to_rle,
-        'output-states!' => \$output_states,
-        'method=s' => \$scan,
-        'rtd!' => \$run_time_states_display,
-        ))
+    if (
+        !GetOptions(
+            'rle!'           => \$to_rle,
+            'output-states!' => \$output_states,
+            'method=s'       => \$scan,
+            'rtd!'           => \$run_time_states_display,
+        )
+        )
     {
-        die "Incorrect options passed!\n"
+        die "Incorrect options passed!\n";
     }
 
-    if (!exists($scan_functions{$scan}))
+    if ( !exists( $scan_functions{$scan} ) )
     {
         die "Unknown scan \"$scan\"!\n";
     }
 
-    $self->{'cmd_line'}->{'to_rle'} = $to_rle;
+    $self->{'cmd_line'}->{'to_rle'}        = $to_rle;
     $self->{'cmd_line'}->{'output_states'} = $output_states;
-    $self->{'cmd_line'}->{'scan'} = $scan;
-    $self->set_run_time_states_display($run_time_states_display && \&_default_rtd_callback);
+    $self->{'cmd_line'}->{'scan'}          = $scan;
+    $self->set_run_time_states_display( $run_time_states_display
+            && \&_default_rtd_callback );
 
     my $filename = shift(@ARGV) || "board.txt";
 
@@ -163,20 +165,19 @@ sub main
     $self->display_solution(@ret);
 }
 
-
 =head1 METHODS TO OVERRIDE
 
 =cut
 
-
-
-
 sub _die_on_abstract_function
 {
-    my ($package, $filename, $line, $subroutine, $hasargs,
-        $wantarray, $evaltext, $is_require, $hints, $bitmask) = caller(1);
-    die ("The abstract function $subroutine() was " .
-        "called, while it needs to be overrided by the derived class.\n");
+    my (
+        $package,   $filename, $line,       $subroutine, $hasargs,
+        $wantarray, $evaltext, $is_require, $hints,      $bitmask
+    ) = caller(1);
+    die(      "The abstract function $subroutine() was "
+            . "called, while it needs to be overrided by the derived class.\n"
+    );
 }
 
 =head2 input_board($self, $file_spec)
@@ -316,7 +317,7 @@ sub render_move
 
     my $move = shift;
 
-    return defined($move)?$move:"";
+    return defined($move) ? $move : "";
 }
 
 =head1 API
@@ -325,32 +326,32 @@ sub render_move
 
 sub _solve_brfs_or_dfs
 {
-    my $self = shift;
+    my $self             = shift;
     my $state_collection = $self->{'state_collection'};
-    my $is_dfs = shift;
-    my %args = @_;
+    my $is_dfs           = shift;
+    my %args             = @_;
 
     my $run_time_display = $self->{'cmd_line'}->{'rt_states_display'};
-    my $rtd_callback = $self->{'run_time_display_callback'};
-    my $max_iters = $args{'max_iters'} || (-1);
-    my $check_iters = ($max_iters >= 0);
+    my $rtd_callback     = $self->{'run_time_display_callback'};
+    my $max_iters        = $args{'max_iters'} || (-1);
+    my $check_iters      = ( $max_iters >= 0 );
 
-    my (@queue, $state, $coords, $depth, @moves, $new_state);
+    my ( @queue, $state, $coords, $depth, @moves, $new_state );
 
-    if (exists($args{'initial_state'}))
+    if ( exists( $args{'initial_state'} ) )
     {
         push @queue, $args{'initial_state'};
     }
 
     my @ret;
 
-    @ret = ("unsolved", undef);
+    @ret = ( "unsolved", undef );
 
-    while (scalar(@queue))
+    while ( scalar(@queue) )
     {
-        if ($check_iters && ($max_iters <= $self->{'num_iters'}))
+        if ( $check_iters && ( $max_iters <= $self->{'num_iters'} ) )
         {
-            @ret = ("interrupted", undef);
+            @ret = ( "interrupted", undef );
             goto Return;
         }
         if ($is_dfs)
@@ -362,7 +363,7 @@ sub _solve_brfs_or_dfs
             $state = shift(@queue);
         }
         $coords = $self->unpack_state($state);
-        $depth = $state_collection->{$state}->{'d'};
+        $depth  = $state_collection->{$state}->{'d'};
 
         $self->{'num_iters'}++;
 
@@ -374,19 +375,20 @@ sub _solve_brfs_or_dfs
                 $self,
                 'depth' => $depth,
                 'state' => $coords,
-                'move' => $state_collection->{$state}->{'m'},
+                'move'  => $state_collection->{$state}->{'m'},
             );
-            # print ((" " x $depth) . join(",", @$coords) . " M=" . $self->render_move($state_collection->{$state}->{'m'}) ."\n");
+
+# print ((" " x $depth) . join(",", @$coords) . " M=" . $self->render_move($state_collection->{$state}->{'m'}) ."\n");
         }
 
-        if ($self->check_if_unsolvable($coords))
+        if ( $self->check_if_unsolvable($coords) )
         {
             next;
         }
 
-        if ($self->check_if_final_state($coords))
+        if ( $self->check_if_final_state($coords) )
         {
-            @ret = ("solved", $state);
+            @ret = ( "solved", $state );
             goto Return;
         }
 
@@ -394,28 +396,28 @@ sub _solve_brfs_or_dfs
 
         foreach my $m (@moves)
         {
-            my $new_coords = $self->perform_move($coords, $m);
-            # Check if this move leads nowhere and if so - skip to the next move.
-            if (!defined($new_coords))
+            my $new_coords = $self->perform_move( $coords, $m );
+
+           # Check if this move leads nowhere and if so - skip to the next move.
+            if ( !defined($new_coords) )
             {
                 next;
             }
 
             $new_state = $self->pack_state($new_coords);
-            if (! exists($state_collection->{$new_state}))
+            if ( !exists( $state_collection->{$new_state} ) )
             {
-                $state_collection->{$new_state} =
-                    {
-                        'p' => $state,
-                        'm' => $m,
-                        'd' => ($depth+1)
-                    };
+                $state_collection->{$new_state} = {
+                    'p' => $state,
+                    'm' => $m,
+                    'd' => ( $depth + 1 )
+                };
                 push @queue, $new_state;
             }
         }
     }
 
-    Return:
+Return:
 
     return @ret;
 }
@@ -423,29 +425,28 @@ sub _solve_brfs_or_dfs
 sub _run_length_encoding
 {
     my @moves = @_;
-    my @ret = ();
+    my @ret   = ();
 
     my $prev_m = shift(@moves);
-    my $count = 1;
+    my $count  = 1;
     my $m;
-    while ($m = shift(@moves))
+    while ( $m = shift(@moves) )
     {
-        if ($m eq $prev_m)
+        if ( $m eq $prev_m )
         {
             $count++;
         }
         else
         {
-            push @ret, [ $prev_m, $count];
+            push @ret, [ $prev_m, $count ];
             $prev_m = $m;
-            $count = 1;
+            $count  = 1;
         }
     }
-    push @ret, [$prev_m, $count];
+    push @ret, [ $prev_m, $count ];
 
     return @ret;
 }
-
 
 sub _solve_state
 {
@@ -454,13 +455,12 @@ sub _solve_state
     my $initial_coords = shift;
 
     my $state = $self->pack_state($initial_coords);
-    $self->{'state_collection'}->{$state} = {'p' => undef, 'd' => 0};
+    $self->{'state_collection'}->{$state} = { 'p' => undef, 'd' => 0 };
 
-    return
-        $self->run_scan(
-            'initial_state' => $state,
-            @_
-        );
+    return $self->run_scan(
+        'initial_state' => $state,
+        @_
+    );
 }
 
 =head2 $self->solve_board($file_spec, %args)
@@ -472,6 +472,7 @@ maximal iterations to run.
 Returns whatever run_scan returns.
 
 =cut
+
 sub solve_board
 {
     my $self = shift;
@@ -480,7 +481,7 @@ sub solve_board
 
     my $initial_coords = $self->input_board($filename);
 
-    return $self->_solve_state($initial_coords, @_);
+    return $self->_solve_state( $initial_coords, @_ );
 }
 
 =head2 $self->run_scan(%args)
@@ -505,11 +506,7 @@ sub run_scan
 
     my %args = @_;
 
-    return
-        $scan_functions{$self->{'cmd_line'}->{'scan'}}->(
-            $self,
-            %args
-        );
+    return $scan_functions{ $self->{'cmd_line'}->{'scan'} }->( $self, %args );
 }
 
 =head2 $self->get_num_iters()
@@ -541,57 +538,58 @@ sub display_solution
     my $state_collection = $self->{'state_collection'};
 
     my $output_states = $self->{'cmd_line'}->{'output_states'};
-    my $to_rle = $self->{'cmd_line'}->{'to_rle'};
+    my $to_rle        = $self->{'cmd_line'}->{'to_rle'};
 
-    my $echo_state =
-        sub {
-            my $state = shift;
-            return $output_states ?
-                ($self->display_state($state) . ": Move = ") :
-                "";
-        };
+    my $echo_state = sub {
+        my $state = shift;
+        return $output_states
+            ? ( $self->display_state($state) . ": Move = " )
+            : "";
+    };
 
     print $ret[0], "\n";
 
-    if ($ret[0] eq "solved")
+    if ( $ret[0] eq "solved" )
     {
-        my $key = $ret[1];
-        my $s = $state_collection->{$key};
-        my @moves = ();
+        my $key    = $ret[1];
+        my $s      = $state_collection->{$key};
+        my @moves  = ();
         my @states = ($key);
 
-        while ($s->{'p'})
+        while ( $s->{'p'} )
         {
             push @moves, $s->{'m'};
             $key = $s->{'p'};
-            $s = $state_collection->{$key};
+            $s   = $state_collection->{$key};
             push @states, $key;
         }
-        @moves = reverse(@moves);
+        @moves  = reverse(@moves);
         @states = reverse(@states);
         my $num_state;
         if ($to_rle)
         {
             my @moves_rle = _run_length_encoding(@moves);
-            my ($m);
 
             $num_state = 0;
-            foreach $m (@moves_rle)
+            foreach my $m (@moves_rle)
             {
-                print $echo_state->($states[$num_state]) . $self->render_move($m->[0]) . " * " . $m->[1] . "\n";
+                print $echo_state->( $states[$num_state] )
+                    . $self->render_move( $m->[0] ) . " * "
+                    . $m->[1] . "\n";
                 $num_state += $m->[1];
             }
         }
         else
         {
-            for($num_state=0;$num_state<scalar(@moves);$num_state++)
+            for ( $num_state = 0 ; $num_state < scalar(@moves) ; $num_state++ )
             {
-                print $echo_state->($states[$num_state]) . $self->render_move($moves[$num_state]) . "\n";
+                print $echo_state->( $states[$num_state] )
+                    . $self->render_move( $moves[$num_state] ) . "\n";
             }
         }
         if ($output_states)
         {
-            print $self->display_state($states[$num_state]), "\n";
+            print $self->display_state( $states[$num_state] ), "\n";
         }
     }
 }
@@ -601,7 +599,10 @@ sub _default_rtd_callback
     my $self = shift;
 
     my %args = @_;
-    print ((" " x $args{depth}) . join(",", @{$args{state}}) . " M=" . $self->render_move($args{move}) ."\n");
+    print(( " " x $args{depth} )
+        . join( ",", @{ $args{state} } ) . " M="
+            . $self->render_move( $args{move} )
+            . "\n" );
 }
 
 =head2 $self->set_run_time_states_display(\&states_display_callback)
@@ -619,10 +620,10 @@ arguments in key => value pairs:
 
 sub set_run_time_states_display
 {
-    my $self = shift;
+    my $self           = shift;
     my $states_display = shift;
 
-    if (! $states_display)
+    if ( !$states_display )
     {
         $self->{'cmd_line'}->{'rt_states_display'} = undef;
     }
