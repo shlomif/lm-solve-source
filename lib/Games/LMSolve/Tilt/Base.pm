@@ -47,7 +47,7 @@ sub move_ball_to_end
         !(
               ( $which_wall eq 'v' )
             ? ( $vert_walls->[$y]->[ $x + ( ( $x_dir < 0 ) ? 0 : 1 ) ] )
-            : ( $horiz_walls->[ $y + ( ( $y_dir < 0 ) ? 0 : 1 ) ]->[$x] )
+            : ( $horiz_walls->[ $y + ( ( $y_dir < 0 )      ? 0 : 1 ) ]->[$x] )
         )
         )
     {

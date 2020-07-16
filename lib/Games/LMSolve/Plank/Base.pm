@@ -203,8 +203,7 @@ sub input_board
     my $state = [
         0,
         (
-            map
-            {
+            map {
                 (
                     $_->{'start'}->{'x'},
                     $_->{'start'}->{'y'},

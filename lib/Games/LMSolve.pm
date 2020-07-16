@@ -179,7 +179,7 @@ sub main
         'man'      => \$man
     ) or pod2usage(2);
 
-    pod2usage(1) if $help;
+    pod2usage(1)                                 if $help;
     pod2usage( -exitstatus => 0, -verbose => 2 ) if $man;
 
     if ( !exists( $self->{'games_solvers'}->{$variant} ) )
