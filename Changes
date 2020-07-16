@@ -2,6 +2,7 @@
     - Update perltidy tests.
     - Made COPYING more GitHub-compliant.
     - Add scripts/tag-release.pl
+    - Convert weaver.ini to @SHLOMIF.
 
 0.14.0  2019-08-16
     - Use tidyall to ensure good practices.
