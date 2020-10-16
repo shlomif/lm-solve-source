@@ -90,7 +90,7 @@ INPUT_LOOP: while ( $read_line->() )
                                 . ")" );
                     }
                     $board[$y][$x] = {
-                        'dirs' => { map { $_ => $cell_dirs{$_} } @dirs },
+                        'dirs'  => { map { $_ => $cell_dirs{$_} } @dirs },
                         'flags' =>
                             { map { $_ => $cell_flags{$_} } @flag_flags },
                     };
